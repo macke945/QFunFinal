@@ -1,8 +1,31 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+@{
     ViewData["Title"] = "MyPage";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Min sida</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    @if (User.IsInRole("Admin") == true)
+    {
+        <partial name="_Admin.cshtml" />
+    }
+    else
+    {
+        <partial name="_User.cshtml" />
+
+    }
+}
+else
+{
+    <p>
+        Please login to view MyPage
+    </p>
+
+
+}

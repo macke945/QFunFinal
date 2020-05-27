@@ -41,6 +41,7 @@ namespace QFun
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
 
@@ -62,7 +63,7 @@ namespace QFun
                    options.ClientSecret = googleAuthNSection["ClientSecret"];
                    options.CallbackPath = "/signin-google";
                });
-               
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
