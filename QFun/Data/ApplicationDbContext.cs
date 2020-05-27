@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using QFun.Data.DbTables;
@@ -16,7 +17,6 @@ namespace QFun.Data
         public DbSet<Challenge> Challenge { get; set; }
         public DbSet<Contribution> Contribution { get; set; }
         public DbSet<Vote> Vote { get; set; }
-        public DbSet<ApplicationUser> IdentityUser { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

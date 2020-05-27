@@ -1,0 +1,109 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+@{
+    ViewData["Title"] = "Chart";
+}
+
+<h1>Chart</h1>
+<div style="width: 50%">
+    <canvas id="myChart" width="400" height="200"></canvas>
+</div>
+<script>
+    var dbData = @Html.Raw(Json.Serialize(Model));
+    var voteData = [];
+    var chData = [];
+    var coData = [];
+    var i = 0;
+
+    Object.keys(dbData).forEach(function (item) {
+        //console.log(dbData[i].votes);
+        voteData[i] = dbData[i].votes;
+        chData[i] = dbData[i].chName;
+        coData[i] = dbData[i].coName;
+        i++;
+    });
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: chData,
+            datasets: [{
+                label: 'Number of Votes',
+                data: voteData,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                labels: coData,
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Challenge Name'
+                    }
+                }],
+                yAxes: [{
+                    stacked: true,
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Votes'
+                    }
+                }]
+            },
+            ///
+            tooltips: {
+                callbacks: {
+
+                    label: function (tooltipItem, data) {
+
+                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                        var index = tooltipItem.index;
+                        return dataset.labels[index] + ': ' + dataset.data[index];
+
+                    }
+                }
+            }
+///
+        }
+    });
+    ///
+    var test = document.getElementById('myChart');
+    test.onclick = function (e) {
+        var bar = myChart.getElementAtEvent(e);
+        if (!bar.length) return; // return if not clicked on bar
+        var label = bar[0]._model.label;
+        switch (label) {
+            // add case for each label
+            case chData[0]:
+                alert('Klickade på Bidrag1');
+                window.open('www.example.com/foo');
+                break;
+            case chData[1]:
+                alert('Klickade på Bidrag2');
+                window.open('www.example.com/bar');
+                break;
+            // resten ...
+        }
+    }
+</script>
