@@ -17,6 +17,7 @@ namespace QFun.Data
         public DbSet<Challenge> Challenge { get; set; }
         public DbSet<Contribution> Contribution { get; set; }
         public DbSet<Vote> Vote { get; set; }
+        public DbSet<ApplicationUser> IdentityUser { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
