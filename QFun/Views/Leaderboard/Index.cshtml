@@ -1,8 +1,16 @@
-﻿@{
+﻿@model QFun.Models.LeaderboardVm.BoardVm
+
+
+@{
     ViewData["Title"] = "Leaderboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Leaderboard</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div class="text-center">
+        <h1 class="display-4">Leaderboard</h1>
+        @foreach (var user in Model.UserVoteData)
+        {
+            <div>
+                <p>Användarnamn: @user.UserName Röster: @user.Votes</p>
+            </div>
+        }
+    </div>
