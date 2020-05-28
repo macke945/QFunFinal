@@ -31,5 +31,11 @@ namespace QFun.Services
             context.SaveChanges();
         }
 
+        public ICollection<Challenge> GetAllChallenges()
+        {
+            return context.Challenge
+                .ToList();
+        }
+
     }
 }

@@ -26,6 +26,7 @@ namespace QFun.Data
             ConfigureChallenge(modelBuilder);
             ConfigureContribution(modelBuilder);
             ConfigureVote(modelBuilder);
+            SeedDataBase(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
         }
@@ -59,6 +60,16 @@ namespace QFun.Data
         {
             modelBuilder.Entity<Vote>()
                .HasKey(l => new { l.UserId, l.ContributionId });
+        }
+
+
+        private static void SeedDataBase(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Challenge>().HasData(
+                new Challenge { Id = 3, Title = "William Shakespeare", Description = "yes" },
+                new Challenge { Id = 4, Title = "Will", Description = "2222"},
+                new Challenge { Id = 5, Title = "Robert C. Martin", Description = "123" }
+            );
         }
     }
 }

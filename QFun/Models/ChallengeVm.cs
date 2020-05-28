@@ -10,5 +10,7 @@ namespace QFun.Models
     {
         public string Title { get; set; }
         public string Description { get; set; }
+
+        public ICollection<Challenge> Challenges { get; set; } = new List<Challenge>();
     }
 }

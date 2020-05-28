@@ -14,20 +14,20 @@ namespace QFun.Controllers
 {
     public class ChallengesController : Controller
     {
+        
         private readonly ChallengeServices challengeService;
 
-        
-
-        private readonly ILogger<ChallengesController> _logger;
-
-        public ChallengesController(ILogger<ChallengesController> logger)
+        public ChallengesController(ChallengeServices challengeService)
         {
-            _logger = logger;
+            this.challengeService = challengeService;
         }
+
 
         public IActionResult Index()
         {
-            return View();
+            var vm = new ChallengeVm();
+            vm.Challenges = challengeService.GetAllChallenges();
+            return View(vm);
         }
 
 

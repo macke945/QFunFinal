@@ -10,8 +10,8 @@ using QFun.Data;
 namespace QFun.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200527133221_initial")]
-    partial class initial
+    [Migration("20200528122952_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
