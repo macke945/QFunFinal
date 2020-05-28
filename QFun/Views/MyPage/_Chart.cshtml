@@ -2,6 +2,7 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @inject RoleManager<IdentityRole> RoleManager
+@model IEnumerable<QFun.Models.UserData>
 @{
     ViewData["Title"] = "Chart";
 }
@@ -20,8 +21,8 @@
     Object.keys(dbData).forEach(function (item) {
         //console.log(dbData[i].votes);
         voteData[i] = dbData[i].votes;
-        chData[i] = dbData[i].chName;
-        coData[i] = dbData[i].coName;
+        chData[i] = dbData[i].challengeName;
+        //coData[i] = dbData[i].coName;
         i++;
     });
     var ctx = document.getElementById('myChart').getContext('2d');
@@ -40,7 +41,7 @@
                     'rgba(153, 102, 255, 0.2)',
                     'rgba(255, 159, 64, 0.2)'
                 ],
-                labels: coData,
+                //labels: coData,
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(54, 162, 235, 1)',
@@ -71,20 +72,7 @@
                     }
                 }]
             },
-            ///
-            tooltips: {
-                callbacks: {
-
-                    label: function (tooltipItem, data) {
-
-                        var dataset = data.datasets[tooltipItem.datasetIndex];
-                        var index = tooltipItem.index;
-                        return dataset.labels[index] + ': ' + dataset.data[index];
-
-                    }
-                }
-            }
-///
+ 
         }
     });
     ///
