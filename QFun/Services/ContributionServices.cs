@@ -37,7 +37,11 @@ namespace QFun.Services
 
         public int GetUserVotes(string id)
         {
-            int votes = 1;
+            //for debugging
+            var random = new Random();
+            int votes =random.Next(1, 99);
+
+            //int votes = 0;
 
             var contributions = GetAllContributionsByUserId(id);
 

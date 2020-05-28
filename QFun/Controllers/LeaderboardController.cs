@@ -45,7 +45,9 @@ namespace QFun.Controllers
 
                 boardVm.UserVoteData.Add(userToAdd);
             }
-            
+
+            boardVm.UserVoteData = boardVm.UserVoteData.OrderByDescending(u => u.Votes).ThenBy(u => u.UserName).ToList();
+
             return View(boardVm);
         }
 
