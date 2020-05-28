@@ -18,7 +18,7 @@ namespace QFun.Services
         }
 
 
-        public void AddChallange(Challenge challenge)
+        public void AddChallenge(Challenge challenge)
         {
             context.Add(challenge);
             context.SaveChanges();
