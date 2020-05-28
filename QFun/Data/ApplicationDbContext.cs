@@ -31,6 +31,14 @@ namespace QFun.Data
             base.OnModelCreating(modelBuilder);
         }
 
+        //private void ConfigureIdentityUser(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<ApplicationUser>()
+        //        .HasMany(a => a.Contributions)
+        //        .WithOne(c => c.User)
+        //        .HasForeignKey(c => c.UserId);
+
+        //}
 
         private void ConfigureChallenge(ModelBuilder modelBuilder)
         {

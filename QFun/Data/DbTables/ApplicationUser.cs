@@ -10,5 +10,7 @@ namespace QFun.Data.DbTables
     {
         public string AboutMe { get; set; }
         public string ImagePath { get; set; }
+        //public List<Contribution> Contributions { get; set; }
+        //public int Votes { get; set; }
     }
 }

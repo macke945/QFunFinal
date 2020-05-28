@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using QFun.Data;
 using QFun.Data.DbTables;
 using System;
@@ -16,6 +17,44 @@ namespace QFun.Services
         {
             this.context = context;
         }
+
+        public IList<string> GetAllUsersId()
+        {
+            return context.Users
+               .Select(u => u.Id)
+               .ToList();
+        }
+
+        public string GetUserNameById(string id)
+        {
+            var user = context.Users
+                .Find(id);
+
+            return user.UserName;
+                
+        }
+        
+
+        public int GetUserVotes(string id)
+        {
+            //for debugging
+            var random = new Random();
+            int votes =random.Next(1, 99);
+
+            //int votes = 0;
+
+            var contributions = GetAllContributionsByUserId(id);
+
+            foreach (var cont in contributions)
+            {
+                votes += cont.Votes.Count();
+            }
+
+            return votes;
+        }
+
+
+
 
         public IList<Contribution> GetAllContributionsByUserId(string id)
         {
