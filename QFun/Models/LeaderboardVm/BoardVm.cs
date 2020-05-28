@@ -8,6 +8,6 @@ namespace QFun.Models.LeaderboardVm
 {
     public class BoardVm
     {
-        public IList<UserData> UserVoteData { get; set; } = new List<UserData>();
+        public IList<LeaderboardUserData> UserVoteData { get; set; } = new List<LeaderboardUserData>();
     }
 }

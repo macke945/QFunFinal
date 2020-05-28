@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace QFun.Models.LeaderboardVm
 {
-    public class UserData
+    public class LeaderboardUserData
     {
         public string UserName { get; set; }
         public int Votes { get; set; }

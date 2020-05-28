@@ -34,7 +34,7 @@ namespace QFun.Controllers
 
             foreach (var id in userIds)
             {
-                var userToAdd = new UserData();
+                var userToAdd = new LeaderboardUserData();
 
                 userToAdd.UserName = contributionServices.GetUserNameById(id);
                 userToAdd.Votes = contributionServices.GetUserVotes(id);
