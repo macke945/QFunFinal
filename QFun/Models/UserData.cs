@@ -7,10 +7,11 @@ namespace QFun.Models
 {
     public class UserData
     {
-        public string ChName { get; set; }
+        public string ChallengeName { get; set; }
 
-        public string CoName { get; set; }
         public int Votes { get; set; }
         
+        
+
     }
 }
