@@ -241,6 +241,26 @@ namespace QFun.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Challenge");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "yes",
+                            Title = "William Shakespeare"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "2222",
+                            Title = "Will"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "123",
+                            Title = "Robert C. Martin"
+                        });
                 });
 
             modelBuilder.Entity("QFun.Data.DbTables.Contribution", b =>
@@ -272,6 +292,16 @@ namespace QFun.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Contribution");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ChallengeId = 1,
+                            Description = "i did this",
+                            Path = "image here",
+                            TimeOfUpload = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("QFun.Data.DbTables.Vote", b =>

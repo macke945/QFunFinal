@@ -74,9 +74,9 @@ namespace QFun.Data
         private static void SeedDataBase(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Challenge>().HasData(
-                new Challenge { Id = 3, Title = "William Shakespeare", Description = "yes" },
-                new Challenge { Id = 4, Title = "Will", Description = "2222"},
-                new Challenge { Id = 5, Title = "Robert C. Martin", Description = "123" }
+                new Challenge { Id = 1, Title = "William Shakespeare", Description = "yes" },
+                new Challenge { Id = 2, Title = "Will", Description = "2222"},
+                new Challenge { Id = 3, Title = "Robert C. Martin", Description = "123" }
             );
 
             modelBuilder.Entity<Contribution>().HasData(
