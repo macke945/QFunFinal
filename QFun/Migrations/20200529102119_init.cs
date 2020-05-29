@@ -222,6 +222,26 @@ namespace QFun.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Challenge",
+                columns: new[] { "Id", "Description", "Title" },
+                values: new object[] { 1, "yes", "William Shakespeare" });
+
+            migrationBuilder.InsertData(
+                table: "Challenge",
+                columns: new[] { "Id", "Description", "Title" },
+                values: new object[] { 2, "2222", "Will" });
+
+            migrationBuilder.InsertData(
+                table: "Challenge",
+                columns: new[] { "Id", "Description", "Title" },
+                values: new object[] { 3, "123", "Robert C. Martin" });
+
+            migrationBuilder.InsertData(
+                table: "Contribution",
+                columns: new[] { "Id", "ChallengeId", "Description", "Path", "TimeOfUpload", "UserId" },
+                values: new object[] { 1, 1, "i did this", "image here", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+ using Microsoft.EntityFrameworkCore;
 using QFun.Data;
 using QFun.Data.DbTables;
 using System;
@@ -100,7 +100,7 @@ namespace QFun.Services
         public string AddContribution(Contribution contribution)
         {
             contribution.TimeOfUpload = DateTime.UtcNow;
-            contribution.Path = contribution.User.Id + contribution.TimeOfUpload.ToString();
+            //contribution.Path = contribution.User.Id + contribution.TimeOfUpload.ToString();
 
             context.Add(contribution);
             context.SaveChanges();
