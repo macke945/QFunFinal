@@ -10,8 +10,8 @@ using QFun.Data;
 namespace QFun.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200529083402_initial")]
-    partial class initial
+    [Migration("20200529132033_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -247,19 +247,19 @@ namespace QFun.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 3,
+                            Id = 1,
                             Description = "yes",
                             Title = "William Shakespeare"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 2,
                             Description = "2222",
                             Title = "Will"
                         },
                         new
                         {
-                            Id = 5,
+                            Id = 3,
                             Description = "123",
                             Title = "Robert C. Martin"
                         });
@@ -294,6 +294,16 @@ namespace QFun.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Contribution");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ChallengeId = 1,
+                            Description = "i did this",
+                            Path = "image here",
+                            TimeOfUpload = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("QFun.Data.DbTables.Vote", b =>

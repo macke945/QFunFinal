@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace QFun.Migrations
 {
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -224,34 +224,22 @@ namespace QFun.Migrations
             migrationBuilder.InsertData(
                 table: "Challenge",
                 columns: new[] { "Id", "Description", "Title" },
-<<<<<<< HEAD:QFun/Migrations/20200529102119_init.cs
                 values: new object[] { 1, "yes", "William Shakespeare" });
-=======
-                values: new object[] { 3, "yes", "William Shakespeare" });
->>>>>>> origin/MyPage:QFun/Migrations/20200529083402_initial.cs
 
             migrationBuilder.InsertData(
                 table: "Challenge",
                 columns: new[] { "Id", "Description", "Title" },
-<<<<<<< HEAD:QFun/Migrations/20200529102119_init.cs
                 values: new object[] { 2, "2222", "Will" });
-=======
-                values: new object[] { 4, "2222", "Will" });
->>>>>>> origin/MyPage:QFun/Migrations/20200529083402_initial.cs
 
             migrationBuilder.InsertData(
                 table: "Challenge",
                 columns: new[] { "Id", "Description", "Title" },
-<<<<<<< HEAD:QFun/Migrations/20200529102119_init.cs
                 values: new object[] { 3, "123", "Robert C. Martin" });
 
             migrationBuilder.InsertData(
                 table: "Contribution",
                 columns: new[] { "Id", "ChallengeId", "Description", "Path", "TimeOfUpload", "UserId" },
                 values: new object[] { 1, 1, "i did this", "image here", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null });
-=======
-                values: new object[] { 5, "123", "Robert C. Martin" });
->>>>>>> origin/MyPage:QFun/Migrations/20200529083402_initial.cs
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
