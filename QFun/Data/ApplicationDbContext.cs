@@ -8,7 +8,7 @@ using QFun.Data.DbTables;
 
 namespace QFun.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -17,7 +17,7 @@ namespace QFun.Data
         public DbSet<Challenge> Challenge { get; set; }
         public DbSet<Contribution> Contribution { get; set; }
         public DbSet<Vote> Vote { get; set; }
-        public DbSet<ApplicationUser> IdentityUser { get; set; }
+        //public DbSet<ApplicationUser> IdentityUser { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
