@@ -61,18 +61,41 @@ namespace QFun.Controllers
         }
 
 
-        public IActionResult Contributions()
+        public IActionResult Contributions(int id)
         {
             var contributionDb = new Contribution();
             var vm = new ContributionsVm();
-            vm.ChallengeId = 1;
             vm.Path = contributionDb.Path;
             vm.Description = contributionDb.Description;
             vm.UserId = contributionDb.UserId;
             vm.User = contributionDb.User;
-            vm.Contributions = contributionServices.GetAllContributionsByChallengeId(vm.ChallengeId);
+            vm.TimeOfUpload = contributionDb.TimeOfUpload;
+            vm.ChallengeId = id;
+            vm.Contributions = contributionServices.GetAllContributionsByChallengeId(id);
             return View(vm);
 
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Contributions(ContributionsVm vm, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var contribution = new Contribution();
+
+                contribution.Path = vm.Path;
+                contribution.Description = vm.Description;
+                contribution.TimeOfUpload = DateTime.UtcNow.ToLocalTime();
+                contribution.ChallengeId = id;
+                contributionServices.AddContribution(contribution);
+
+                return RedirectToAction(nameof(Contributions));
+            }
+
+            return RedirectToAction("Error", "Home", "");
+        }
+
     }
 }
