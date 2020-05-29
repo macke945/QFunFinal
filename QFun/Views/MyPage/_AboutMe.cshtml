@@ -2,16 +2,15 @@
 @{
     ViewData["Title"] = "_AboutMe";
 }
-<h1>About me</h1>
+<h1>Om mig</h1>
 
 <form asp-action="_AboutMe" class="">
     <div class="form-group">
-        <label asp-for="AboutMe" class="control-label">About me</label>
         <textarea asp-for="AboutMe" class="form-control"></textarea>
         <span asp-validation-for="AboutMe"></span>
 
     </div>
-    <button type="submit" value="Save" class="btn btn-primary">Register</button>
+    <button type="submit" value="Save" class="btn btn-primary">Spara</button>
 </form>
 
 @section Scripts {

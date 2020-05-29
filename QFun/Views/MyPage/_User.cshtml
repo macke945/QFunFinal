@@ -1,24 +1,21 @@
-
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<QFun.Data.DbTables.ApplicationUser> UserManager
 @{
     ViewData["Title"] = "_User";
 }
 
-<h1>_User</h1>
+    <h1>@((await UserManager.GetUserAsync(User)).NormalizedUserName)</h1>
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a asp-area="Views" asp-controller="MyPage" asp-action="_AboutMe">Om mig</a></li>
+    <li class="breadcrumb-item mt-lg-auto"><a asp-area="Views" asp-controller="MyPage" asp-action="_Chart">Utmanings statistik </a></li>
+</ol>
+@*<div class="row w-15 justify-content-center bg-dark pt-lg-1">
 
-<div class="row w-15 justify-content-center bg-dark pt-lg-1">
+        <div>
+            <img id="profile-picture" class="border border-dark"
+                 src="~/images/bild-saknas.jpg"
+                 width="128" height="128" />
+        </div>
 
-    <div>
-        <img id="profile-picture" class="border border-dark"
-             src="~/images/bild-saknas.jpg"
-             width="128" height="128" />
-    </div>
-
-
-    <ol class="breadcrumb col-lg-10">
-        <li class="breadcrumb-item"><a asp-area="Views" asp-controller="MyPage" asp-action="_AboutMe">About ME!!</a></li>
-        <li class="breadcrumb-item mt-lg-auto"><a href="#">Contributions</a></li>
-        <li class="breadcrumb-item mt-lg-auto"><a asp-area="Views" asp-controller="MyPage" asp-action="_Chart">Challenge Statistics</a></li>
-    </ol>
-
-</div>
+    </div>*@
 
