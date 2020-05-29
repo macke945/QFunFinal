@@ -65,12 +65,12 @@ namespace QFun.Controllers
         {
             var contributionDb = new Contribution();
             var vm = new ContributionsVm();
-            var id = vm.ChallengeId;
-            vm.Contributions = contributionServices.GetAllContributionsByChallengeId(id);
+            vm.ChallengeId = 1;
             vm.Path = contributionDb.Path;
             vm.Description = contributionDb.Description;
             vm.UserId = contributionDb.UserId;
             vm.User = contributionDb.User;
+            vm.Contributions = contributionServices.GetAllContributionsByChallengeId(vm.ChallengeId);
             return View(vm);
 
         }
