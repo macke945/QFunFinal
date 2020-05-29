@@ -5,12 +5,45 @@
     ViewData["Title"] = "Leaderboard";
 }
 
-    <div class="text-center">
-        <h1 class="display-4">Leaderboard</h1>
+<h1>
+    Poängtabell
+</h1>
+
+<table class="table table-striped table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Användare
+            </th>
+            <th>
+                Antal röster
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @{int i = 0;}
         @foreach (var user in Model.UserVoteData)
         {
-            <div>
-                <p>Användarnamn: @user.UserName Röster: @user.Votes</p>
-            </div>
+
+
+            <tr >
+                @{ i++; }
+                <td>
+                    @i
+                </td>
+                <td>
+                    @user.UserName
+                </td>
+                <td>
+                    @user.Votes
+                </td>
+            </tr>
         }
-    </div>
+
+
+    </tbody>
+</table>
