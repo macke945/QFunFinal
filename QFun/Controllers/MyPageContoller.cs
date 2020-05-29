@@ -53,50 +53,26 @@ namespace QFun.Controllers
         }
 
         // GET: Movies/Edit/5
-        public IActionResult _AboutMe()
+        public async Task<IActionResult> _AboutMe()
         {
-            //var identity = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //var userAbuts = _context.IdentityUser.Include(x => x.AboutMe).ToList();
-            /*if (userAbuts == null)
-            {
-                return NotFound();
-            }
-            */
-            return View();
+            var vm = new AboutMeVm();
+            return View(vm);
         }
 
         // POST: Movies/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        /*[HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> _AboutMe()
+        public async Task<IActionResult> _AboutMe(AboutMeVm vm)
         {
-          
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(IdentityUser);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MovieExists(movie.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("Index");
-            }
-            return View(movie);
+            var user = _context.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
+            user.AboutMe = vm.AboutMe;
+            _context.Update(user);
+            _context.SaveChanges();
+            return View();
         }
-        */
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

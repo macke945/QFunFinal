@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace QFun.Migrations
 {
-    public partial class init : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +40,6 @@ namespace QFun.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: false),
                     AboutMe = table.Column<string>(nullable: true),
                     ImagePath = table.Column<string>(nullable: true)
                 },
@@ -221,6 +220,21 @@ namespace QFun.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Challenge",
+                columns: new[] { "Id", "Description", "Title" },
+                values: new object[] { 3, "yes", "William Shakespeare" });
+
+            migrationBuilder.InsertData(
+                table: "Challenge",
+                columns: new[] { "Id", "Description", "Title" },
+                values: new object[] { 4, "2222", "Will" });
+
+            migrationBuilder.InsertData(
+                table: "Challenge",
+                columns: new[] { "Id", "Description", "Title" },
+                values: new object[] { 5, "123", "Robert C. Martin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

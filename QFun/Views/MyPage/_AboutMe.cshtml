@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@model QFun.Models.AboutMeVm
+@inject SignInManager<QFun.Data.DbTables.ApplicationUser> SignInManager
+@inject UserManager<QFun.Data.DbTables.ApplicationUser> UserManager
 @inject RoleManager<IdentityRole> RoleManager
 @{
     ViewData["Title"] = "_AboutMe";
@@ -8,4 +9,15 @@
 @User.Identity.Name
 @Html.ViewData.Values
 
+<h1>About me</h1>
+
+<form asp-action="_AboutMe" class="">
+    <div class="form-group">
+        <label asp-for="AboutMe" class="control-label">About me</label>
+        <input asp-for="AboutMe" class="form-control" />
+        <span asp-validation-for="AboutMe"></span>
+
+    </div>
+    <button type="submit" value="Save" class="btn btn-primary">Register</button>
+</form>
 
