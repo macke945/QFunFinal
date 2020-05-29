@@ -53,7 +53,7 @@ namespace QFun.Controllers
             return View(newlist);
         }
 
-        // GET: Movies/Edit/5
+        // GET: About me
         public async Task<IActionResult> _AboutMe()
         {
             var vm = new AboutMeVm();
@@ -62,9 +62,7 @@ namespace QFun.Controllers
             return View(vm);
         }
 
-        // POST: Movies/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: About me
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> _AboutMe(AboutMeVm vm)
