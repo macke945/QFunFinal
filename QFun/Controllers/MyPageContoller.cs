@@ -30,19 +30,20 @@ namespace QFun.Controllers
         public IActionResult _Chart()
         {
             List<UserData> newlist = new List<UserData>();
-            
+
             var identity = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            
+
             var tempModel = (from a in _context.Challenge
                              join b in _context.Contribution on a.Id equals
                              b.ChallengeId
-                             join c in _context.Vote on b.Id equals c.ContributionId where identity == b.UserId
+                             join c in _context.Vote on b.Id equals c.ContributionId
+                             where identity == b.UserId
                              select new { a.Title, c.Contribution.Votes.Count }).Distinct();
 
             foreach (var item in tempModel)
             {
                 var userdata = new UserData();
-                
+
                 userdata.ChallengeName = item.Title;
                 userdata.Votes = item.Count;
                 newlist.Add(userdata);
@@ -56,6 +57,8 @@ namespace QFun.Controllers
         public async Task<IActionResult> _AboutMe()
         {
             var vm = new AboutMeVm();
+            var user = _context.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
+            vm.AboutMe = user.AboutMe;
             return View(vm);
         }
 
@@ -67,10 +70,17 @@ namespace QFun.Controllers
         public async Task<IActionResult> _AboutMe(AboutMeVm vm)
         {
             var user = _context.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
-            user.AboutMe = vm.AboutMe;
-            _context.Update(user);
-            _context.SaveChanges();
-            return View();
+            if (ModelState.IsValid)
+            {
+
+                user.AboutMe = vm.AboutMe;
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(vm);
         }
 
 
