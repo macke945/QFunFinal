@@ -41,10 +41,17 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Title)
+                    <a asp-action="Contributions" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a asp-action="Contributions" asp-route-id="@item.Id">
+                    See Contributions/Add Contributions
+                    </a>
                 </td>
             </tr>
         }

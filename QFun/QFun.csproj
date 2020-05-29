@@ -10,6 +10,12 @@
     <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
     <Compile Remove="Migrations\20200527133221_initial.cs" />
     <Compile Remove="Migrations\20200527133221_initial.Designer.cs" />
+    <Compile Remove="Migrations\20200528122952_init.cs" />
+    <Compile Remove="Migrations\20200528122952_init.Designer.cs" />
+    <Compile Remove="Migrations\20200529083711_seedingdb.cs" />
+    <Compile Remove="Migrations\20200529083711_seedingdb.Designer.cs" />
+    <Compile Remove="Migrations\20200529084921_init.cs" />
+    <Compile Remove="Migrations\20200529084921_init.Designer.cs" />
   </ItemGroup>
 
 

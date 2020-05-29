@@ -78,6 +78,10 @@ namespace QFun.Data
                 new Challenge { Id = 4, Title = "Will", Description = "2222"},
                 new Challenge { Id = 5, Title = "Robert C. Martin", Description = "123" }
             );
+
+            modelBuilder.Entity<Contribution>().HasData(
+                new Contribution { Id = 1, ChallengeId = 1, Description = "i did this", Path = "image here" }
+                );
         }
     }
 }

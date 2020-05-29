@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
 using QFun.Data;
 using QFun.Data.DbTables;
 using System;

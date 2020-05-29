@@ -16,10 +16,12 @@ namespace QFun.Controllers
     {
         
         private readonly ChallengeServices challengeService;
+        private readonly ContributionServices contributionServices;
 
-        public ChallengesController(ChallengeServices challengeService)
+        public ChallengesController(ChallengeServices challengeService, ContributionServices contributionServices)
         {
             this.challengeService = challengeService;
+            this.contributionServices = contributionServices;
         }
 
 
@@ -56,6 +58,21 @@ namespace QFun.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+        public IActionResult Contributions()
+        {
+            var contributionDb = new Contribution();
+            var vm = new ContributionsVm();
+            var id = vm.ChallengeId;
+            vm.Contributions = contributionServices.GetAllContributionsByChallengeId(id);
+            vm.Path = contributionDb.Path;
+            vm.Description = contributionDb.Description;
+            vm.UserId = contributionDb.UserId;
+            vm.User = contributionDb.User;
+            return View(vm);
+
         }
     }
 }
