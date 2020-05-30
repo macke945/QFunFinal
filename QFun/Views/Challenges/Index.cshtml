@@ -1,4 +1,9 @@
 ﻿@model ChallengeVm;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<QFun.Data.DbTables.ApplicationUser> SignInManager
+@inject UserManager<QFun.Data.DbTables.ApplicationUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+
 @{
     ViewData["Title"] = "Challenges";
 }
@@ -50,7 +55,7 @@
                 </td>
                 <td>
                     <a asp-action="Contributions" asp-route-id="@item.Id">
-                    See Contributions/Add Contributions
+                        See Contributions/Add Contributions
                     </a>
                 </td>
             </tr>
