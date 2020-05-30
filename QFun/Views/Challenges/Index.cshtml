@@ -7,7 +7,7 @@
 @{
     ViewData["Title"] = "Challenges";
 }
-@if (SignInManager.IsSignedIn(User) /*&& User.IsInRole("Admin") == true*/)
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin") == true)
 {
 
     <div class="row">

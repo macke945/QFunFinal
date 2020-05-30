@@ -9,7 +9,7 @@
 
 @if(SignInManager.IsSignedIn(User))
 {
-
+    <h2>@User.Identity.Name Add your contribution</h2>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Contributions" asp-route-id="@Model.ChallengeId">
