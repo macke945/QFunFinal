@@ -16,8 +16,9 @@ namespace QFun.Models
         public DateTime TimeOfUpload { get; set; }
         public string Description { get; set; }
         public string UserId { get; set; }
-        public IdentityUser User { get; set; }
+        public ApplicationUser User { get; set; }
         public Challenge Challenge { get; set; }
-        public List<Vote> Votes { get; set; }
+        public int Votes { get; set; }
+        //public List<Vote> Votes { get; set; }
     }
 }
