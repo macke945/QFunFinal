@@ -7,6 +7,10 @@
 @{
     ViewData["Title"] = "Challenges";
 }
+@if(SignInManager.IsSignedIn(User))
+{
+    @if(User.IsInRole("Admin"))
+    {
 
 <div class="row">
     <div class="col-md-4">
@@ -28,6 +32,9 @@
         </form>
     </div>
 </div>
+
+    }
+}
 
 <table class="table">
     <thead>
