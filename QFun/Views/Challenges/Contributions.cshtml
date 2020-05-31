@@ -1,4 +1,4 @@
-﻿@model QFun.Models.ContributionsVms.ContributionsVm;
+﻿@model ContributionsVm;
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<QFun.Data.DbTables.ApplicationUser> SignInManager
 @inject UserManager<QFun.Data.DbTables.ApplicationUser> UserManager
@@ -66,16 +66,13 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.TimeOfUpload)
                 </td>
-                @foreach (var user in Model.ContributionUserData)
-                {
-                    <td>
-                        @Html.DisplayFor(modelUser => user.UserName)
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserName)
 
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelUser => user.Votes)
-                    </td>
-                }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem=> item.Votes)
+                </td>
             </tr>
         }
 

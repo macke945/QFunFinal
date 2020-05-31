@@ -8,7 +8,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using QFun.Data.DbTables;
 using QFun.Models;
-using QFun.Models.ContributionsVms;
 using QFun.Services;
 
 namespace QFun.Controllers
@@ -66,12 +65,6 @@ namespace QFun.Controllers
         {
             var contributionDb = new Contribution();
             var vm = new ContributionsVm();
-            var userIds = contributionServices.GetAllUsersId();
-            foreach (var userId in userIds)
-            {
-                vm.UserId = contributionServices.GetUserIdById(userId);
-                vm.UserName = contributionServices.GetUserNameById(userId);
-            }
             vm.Path = contributionDb.Path;
             vm.Description = contributionDb.Description;
             vm.TimeOfUpload = contributionDb.TimeOfUpload;
@@ -100,7 +93,8 @@ namespace QFun.Controllers
                     vm.UserId = contributionServices.GetUserIdById(userId);
                 }
                 contribution.UserId = vm.UserId;
-                contribution.UserName = contributionServices.GetUserNameById(vm.UserId);
+                var UserName = contributionServices.GetUserNameById(vm.UserId);
+                UserName = vm.UserName;
                 contributionServices.AddContribution(contribution);
 
                 return RedirectToAction(nameof(Contributions));

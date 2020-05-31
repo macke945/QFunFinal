@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace QFun.Models.ContributionsVms
+namespace QFun.Models
 {
     public class ContributionsVm
     {
@@ -19,6 +19,5 @@ namespace QFun.Models.ContributionsVms
         public string UserName { get; set; }
         public Challenge Challenge { get; set; }
         public List<Vote> Votes { get; set; } = new List<Vote>();
-        public IList<ContributionUserData> ContributionUserData = new List<ContributionUserData>();
     }
 }

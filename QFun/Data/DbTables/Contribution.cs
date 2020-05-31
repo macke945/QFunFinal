@@ -17,6 +17,5 @@ namespace QFun.Data.DbTables
         public int ChallengeId { get; set; }
         public Challenge Challenge { get; set; }
         public List<Vote> Votes { get; set; }
-        public string UserName { get; set; }
     }
 }

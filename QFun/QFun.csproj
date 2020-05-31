@@ -26,6 +26,8 @@
     <Compile Remove="Migrations\20200530153338_user-cont-test.Designer.cs" />
     <Compile Remove="Migrations\20200531162312_cont-test.cs" />
     <Compile Remove="Migrations\20200531162312_cont-test.Designer.cs" />
+    <Compile Remove="Migrations\20200531162851_inint.cs" />
+    <Compile Remove="Migrations\20200531162851_inint.Designer.cs" />
   </ItemGroup>
 
 
