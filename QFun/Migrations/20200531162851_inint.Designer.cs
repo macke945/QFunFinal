@@ -10,8 +10,8 @@ using QFun.Data;
 namespace QFun.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200530153338_user-cont-test")]
-    partial class userconttest
+    [Migration("20200531162851_inint")]
+    partial class inint
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -286,6 +286,9 @@ namespace QFun.Migrations
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

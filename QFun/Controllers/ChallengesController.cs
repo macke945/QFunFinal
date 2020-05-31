@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using QFun.Data.DbTables;
 using QFun.Models;
+using QFun.Models.ContributionsVms;
 using QFun.Services;
 
 namespace QFun.Controllers
@@ -65,11 +66,16 @@ namespace QFun.Controllers
         {
             var contributionDb = new Contribution();
             var vm = new ContributionsVm();
+            var userIds = contributionServices.GetAllUsersId();
+            foreach (var userId in userIds)
+            {
+                vm.UserId = contributionServices.GetUserIdById(userId);
+                vm.UserName = contributionServices.GetUserNameById(userId);
+            }
             vm.Path = contributionDb.Path;
             vm.Description = contributionDb.Description;
             vm.TimeOfUpload = contributionDb.TimeOfUpload;
             vm.ChallengeId = id;
-            vm.UserId = contributionDb.UserId;
             vm.Contributions = contributionServices.GetAllContributionsByChallengeId(id);
             return View(vm);
 
@@ -83,13 +89,18 @@ namespace QFun.Controllers
             if (ModelState.IsValid)
             {
                 var contribution = new Contribution();
-
-                contribution.User = vm.User;
                 contribution.Path = vm.Path;
                 contribution.Description = vm.Description;
                 contribution.TimeOfUpload = DateTime.UtcNow.ToLocalTime();
                 contribution.ChallengeId = id;
+
+                var userIds = contributionServices.GetAllUsersId();
+                foreach (var userId in userIds)
+                {
+                    vm.UserId = contributionServices.GetUserIdById(userId);
+                }
                 contribution.UserId = vm.UserId;
+                contribution.UserName = contributionServices.GetUserNameById(vm.UserId);
                 contributionServices.AddContribution(contribution);
 
                 return RedirectToAction(nameof(Contributions));
@@ -105,8 +116,6 @@ namespace QFun.Controllers
         public IActionResult Vote()
         {
             var vm = new ContributionsVm();
-            i++;
-            vm.Votes = i;
             return View(vm);
         }
 
@@ -116,7 +125,6 @@ namespace QFun.Controllers
         {
             if (ModelState.IsValid)
             {
-                i = vm.Votes;
                 return RedirectToAction(nameof(Contributions));
             }
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace QFun.Models
+namespace QFun.Models.ContributionsVms
 {
     public class ContributionsVm
     {
@@ -16,9 +16,9 @@ namespace QFun.Models
         public DateTime TimeOfUpload { get; set; }
         public string Description { get; set; }
         public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
+        public string UserName { get; set; }
         public Challenge Challenge { get; set; }
-        public int Votes { get; set; }
-        //public List<Vote> Votes { get; set; }
+        public List<Vote> Votes { get; set; } = new List<Vote>();
+        public IList<ContributionUserData> ContributionUserData = new List<ContributionUserData>();
     }
 }

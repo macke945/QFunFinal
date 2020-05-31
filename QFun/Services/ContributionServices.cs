@@ -33,6 +33,14 @@ namespace QFun.Services
             return user.UserName;
                 
         }
+
+        public string GetUserIdById(string id)
+        {
+            var user = context.Users
+                .Find(id);
+
+            return user.Id;
+        }
         
 
         public int GetUserVotes(string id)

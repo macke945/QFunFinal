@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace QFun.Migrations
 {
-    public partial class init : Migration
+    public partial class inint : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -178,7 +178,8 @@ namespace QFun.Migrations
                     TimeOfUpload = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
-                    ChallengeId = table.Column<int>(nullable: false)
+                    ChallengeId = table.Column<int>(nullable: false),
+                    UserName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -238,8 +239,8 @@ namespace QFun.Migrations
 
             migrationBuilder.InsertData(
                 table: "Contribution",
-                columns: new[] { "Id", "ChallengeId", "Description", "Path", "TimeOfUpload", "UserId" },
-                values: new object[] { 1, 1, "i did this", "image here", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null });
+                columns: new[] { "Id", "ChallengeId", "Description", "Path", "TimeOfUpload", "UserId", "UserName" },
+                values: new object[] { 1, 1, "i did this", "image here", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
