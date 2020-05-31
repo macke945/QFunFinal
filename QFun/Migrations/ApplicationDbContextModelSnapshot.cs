@@ -299,8 +299,40 @@ namespace QFun.Migrations
                             Id = 1,
                             ChallengeId = 1,
                             Description = "i did this",
-                            Path = "image here",
+                            Path = "imagehere",
                             TimeOfUpload = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ChallengeId = 1,
+                            Description = "my test 1",
+                            Path = "test1",
+                            TimeOfUpload = new DateTime(2020, 5, 4, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ChallengeId = 2,
+                            Description = "my test 2",
+                            Path = "test2",
+                            TimeOfUpload = new DateTime(2020, 5, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ChallengeId = 2,
+                            Description = "my test 3",
+                            Path = "test3",
+                            TimeOfUpload = new DateTime(2020, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ChallengeId = 3,
+                            Description = "my test 4",
+                            Path = "test4",
+                            TimeOfUpload = new DateTime(2020, 5, 25, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 

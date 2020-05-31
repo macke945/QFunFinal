@@ -20,6 +20,8 @@
     <Compile Remove="Migrations\20200529083031_initial.Designer.cs" />
     <Compile Remove="Migrations\20200529083402_initial.cs" />
     <Compile Remove="Migrations\20200529083402_initial.Designer.cs" />
+    <Compile Remove="Migrations\20200529132033_init.cs" />
+    <Compile Remove="Migrations\20200529132033_init.Designer.cs" />
   </ItemGroup>
 
 
@@ -37,6 +39,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

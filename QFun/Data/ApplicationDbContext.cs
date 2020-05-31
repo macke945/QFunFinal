@@ -17,7 +17,7 @@ namespace QFun.Data
         public DbSet<Challenge> Challenge { get; set; }
         public DbSet<Contribution> Contribution { get; set; }
         public DbSet<Vote> Vote { get; set; }
-        //public DbSet<ApplicationUser> IdentityUser { get; set; }
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,19 +26,19 @@ namespace QFun.Data
             ConfigureChallenge(modelBuilder);
             ConfigureContribution(modelBuilder);
             ConfigureVote(modelBuilder);
+            ConfigureApplicationUser(modelBuilder);
             SeedDataBase(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
         }
 
-        //private void ConfigureIdentityUser(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<ApplicationUser>()
-        //        .HasMany(a => a.Contributions)
-        //        .WithOne(c => c.User)
-        //        .HasForeignKey(c => c.UserId);
-
-        //}
+        private void ConfigureApplicationUser(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(a => a.Contributions)
+                .WithOne(c => c.User)
+                .HasForeignKey(c => c.UserId);
+        }
 
         private void ConfigureChallenge(ModelBuilder modelBuilder)
         {
@@ -80,7 +80,11 @@ namespace QFun.Data
             );
 
             modelBuilder.Entity<Contribution>().HasData(
-                new Contribution { Id = 1, ChallengeId = 1, Description = "i did this", Path = "image here" }
+                new Contribution { Id = 1, ChallengeId = 1, Description = "i did this", Path = "imagehere", TimeOfUpload = Convert.ToDateTime("2020-05-03")},
+                new Contribution { Id = 2, ChallengeId = 1, Description = "my test 1", Path = "test1", TimeOfUpload = Convert.ToDateTime("2020-05-04")},
+                new Contribution { Id = 3, ChallengeId = 2, Description = "my test 2", Path = "test2", TimeOfUpload = Convert.ToDateTime("2020-05-14")},
+                new Contribution { Id = 4 , ChallengeId = 2, Description = "my test 3", Path = "test3", TimeOfUpload = Convert.ToDateTime("2020-05-24")},
+                new Contribution { Id = 5, ChallengeId = 3, Description = "my test 4", Path = "test4", TimeOfUpload = Convert.ToDateTime("2020-05-25")}
                 );
         }
     }

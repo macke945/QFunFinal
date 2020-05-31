@@ -25,30 +25,20 @@ namespace QFun.Controllers
 
         public IActionResult Index()
         {
-
-            
-
             var boardVm = new BoardVm();
 
-            var userIds = contributionServices.GetAllUsersId();
-
-            foreach (var id in userIds)
+            foreach (var user in contributionServices.GetAllUsers())
             {
                 var userToAdd = new LeaderboardUserData();
-
-                userToAdd.UserName = contributionServices.GetUserNameById(id);
-                userToAdd.Votes = contributionServices.GetUserVotes(id);
-
-                //Debug.WriteLine(userToAdd.UserName);
-                //Debug.WriteLine(userToAdd.Votes);
-                //Debug.WriteLine(userToAdd);
-
+                userToAdd.UserName = user.UserName;
+                userToAdd.Votes = contributionServices.CountUserVotes(user);
                 boardVm.UserVoteData.Add(userToAdd);
             }
 
             boardVm.UserVoteData = boardVm.UserVoteData.OrderByDescending(u => u.Votes).ThenBy(u => u.UserName).ToList();
 
             return View(boardVm);
+
         }
 
       
