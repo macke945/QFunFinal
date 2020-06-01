@@ -75,10 +75,20 @@
                     }
                     @*<input type="submit" name="VoteButton" value="Rösta" class="btn btn-success"/>*@
                 </td>
+                <td>
+                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                        <a asp-action="DeleteContributionAdmin" asp-route-id1="@item.Id" asp-route-id2="@Model.ChallengeId">Ta bort</a>
+                    }
+                    @if (SignInManager.IsSignedIn(User) && User.Identity.Name == item.User.UserName)
+                    {
+                        <a asp-action="DeleteContributionUser" asp-route-id1="@item.Id" asp-route-id2="@Model.ChallengeId">Ta Bort</a>
+                    }
+                </td>
             </tr>
        
         }
-
+        
 
     </tbody>
 </table>

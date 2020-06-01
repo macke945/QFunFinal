@@ -63,6 +63,12 @@
                         Lägg till bidrag
                     </a>
                 </td>
+                <td>
+                    @if (SignInManager.IsSignedIn(User)) //&& User.IsInRole("Admin"))
+                    {
+                        <a asp-action="DeleteChallengeAdmin" asp-route-id="@item.Id">Ta bort</a>
+                    }
+                </td>
             </tr>
         }
 

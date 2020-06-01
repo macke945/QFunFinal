@@ -167,5 +167,49 @@ namespace QFun.Controllers
 
             //return RedirectToAction(nameof(Contributions));
         }
+
+
+        public async Task<IActionResult> DeleteContributionAdmin(int id1, int id2)
+        {
+
+            if (ModelState.IsValid)
+            {
+                contributionServices.RemoveContributionById(id1);
+            }
+
+            string url = "https://localhost:44384/Challenges/Contributions";
+            url += "/" + id2;
+
+            return Redirect(url);
+
+        }
+
+        public async Task<IActionResult> DeleteContributionUser(int id1, int id2)
+        {
+
+            if (ModelState.IsValid)
+            {
+                contributionServices.RemoveContributionById(id1);
+            }
+
+            string url = "https://localhost:44384/Challenges/Contributions";
+            url += "/" + id2;
+
+            return Redirect(url);
+
+        }
+        public async Task<IActionResult> DeleteChallengeAdmin(int id)
+        {
+
+            if (ModelState.IsValid)
+            {
+                challengeService.RemoveChallengeById(id);
+            }
+
+
+            string url = "https://localhost:44384/Challenges/Index";
+
+            return Redirect(url);
+        }
     }
 }
