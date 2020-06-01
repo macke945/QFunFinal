@@ -30,6 +30,16 @@ namespace QFun.Services
             context.SaveChanges();
         }
 
+        public void AddVote(string userId, int contId)
+        {
+            var voteToAdd = new Vote();
+
+            voteToAdd.ContributionId = contId;
+            voteToAdd.UserId = userId;
+            context.Add(voteToAdd);
+            context.SaveChanges();
+        }
+
         public void RemoveVote(Vote vote)
         {
             context.Remove(vote);

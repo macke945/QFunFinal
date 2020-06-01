@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
@@ -21,13 +23,15 @@ namespace QFun.Controllers
         private readonly ContributionServices contributionServices;
         private readonly VoteServices voteServices;
         private readonly IHostingEnvironment hostingEnvironment;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public ChallengesController(ChallengeServices challengeService, ContributionServices contributionServices, IHostingEnvironment hostingEnvironment)
+        public ChallengesController(ChallengeServices challengeService, ContributionServices contributionServices, IHostingEnvironment hostingEnvironment, UserManager<ApplicationUser> userManager, VoteServices voteServices)
         {
             this.challengeService = challengeService;
             this.contributionServices = contributionServices;
             this.voteServices = voteServices;
             this.hostingEnvironment = hostingEnvironment;
+            this.userManager = userManager;
         }
 
 
@@ -107,25 +111,29 @@ namespace QFun.Controllers
 
                     var contribution = new Contribution();
 
-                    contribution.Path = filePath;
+                    contribution.Path = uniqueFileName;
                     contribution.Description = vm.Description;
                     contribution.ChallengeId = id;
-                     var userIds = contributionServices.GetAllUsersId();
-                    foreach (var userId in userIds)
-                    {
-                        vm.UserId = contributionServices.GetUserIdById(userId);
-                    }
-                    contribution.UserId = vm.UserId;
-                    var UserName = contributionServices.GetUserNameById(vm.UserId);
+                    // var userIds = contributionServices.GetAllUsersId();
+                    //foreach (var userId in userIds)
+                    //{
+                    //    vm.UserId = contributionServices.GetUserIdById(userId);
+                    //}
+
+                    ClaimsPrincipal currentUser = this.User;
+                    var currentUserId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+                    contribution.UserId = currentUserId;
+                    var UserName = contributionServices.GetUserNameById(currentUserId);
                     UserName = vm.UserName;
                     contributionServices.AddContribution(contribution);
-                    if (!string.IsNullOrEmpty(VoteButton))
-                    {
-                        var vote = new Vote();
-                        vote.UserId = vm.UserId;
-                        vote.ContributionId = vm.ContributionsId;
-                        voteServices.AddVote(vote);
-                    }
+                    //if (!string.IsNullOrEmpty(VoteButton))
+                    //{
+                    //    var vote = new Vote();
+                    //    vote.UserId = vm.UserId;
+                    //    vote.ContributionId = vm.ContributionsId;
+                    //    voteServices.AddVote(vote);
+                    //}
 
                 }
 
@@ -133,7 +141,37 @@ namespace QFun.Controllers
                 return RedirectToAction(nameof(Contributions));
             }
 
+
+
             return RedirectToAction("Error", "Home", "");
+        }
+
+        public async Task<IActionResult> Votes(ContributionsVm vm, int id)
+        {
+
+            if (ModelState.IsValid)
+            {
+                
+
+                ClaimsPrincipal currentUser = this.User;
+                var currentUserId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+                var vote = new Vote();
+                vote.UserId = currentUserId;
+                vote.ContributionId = id;
+
+                if (voteServices.UserAbleToVote(vote))
+                {
+                    voteServices.AddVote(vote);
+                }
+                else
+                {
+                    voteServices.RemoveVote(vote);
+                }
+            }
+
+
+            return RedirectToAction(nameof(Contributions));
         }
     }
 }

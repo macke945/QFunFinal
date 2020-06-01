@@ -40,6 +40,16 @@ namespace QFun.Services
             return votes;
         }
 
+        public Contribution GetContributionById(int id)
+        {
+            return context.Contribution.Find(id);
+        }
+
+        public ApplicationUser GetUserById(string id)
+        {
+            return context.Users.Find(id);
+        } 
+
         public IList<string> GetAllUsersId()
         {
             return context.Users
@@ -90,7 +100,7 @@ namespace QFun.Services
             return context.Contribution.Where(c => c.UserId == id)
                 .Include(c => c.Challenge)
                 .Include(c => c.Votes)
-                .ThenInclude(v => v.User)
+                //.ThenInclude(v => v.User)
                 .ToList();
         }
 
@@ -99,7 +109,7 @@ namespace QFun.Services
             return context.Contribution.Where(c => c.ChallengeId == id)
                 .Include(c => c.User)
                 .Include(c => c.Votes)
-                .ThenInclude(v => v.User)
+                //.ThenInclude(v => v.User)
                 .ToList();
         }
 
