@@ -10,13 +10,8 @@ using QFun.Data;
 namespace QFun.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-<<<<<<< HEAD:QFun/Migrations/20200531171753_init.Designer.cs
-    [Migration("20200531171753_init")]
+    [Migration("20200601090224_init")]
     partial class init
-=======
-    [Migration("20200531074528_initial")]
-    partial class initial
->>>>>>> mike:QFun/Migrations/20200531074528_initial.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -307,7 +302,7 @@ namespace QFun.Migrations
                             ChallengeId = 1,
                             Description = "i did this",
                             Path = "imagehere",
-                            TimeOfUpload = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            TimeOfUpload = new DateTime(2020, 5, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
@@ -418,7 +413,7 @@ namespace QFun.Migrations
                         .IsRequired();
 
                     b.HasOne("QFun.Data.DbTables.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("Contributions")
                         .HasForeignKey("UserId");
                 });
 

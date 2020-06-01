@@ -300,7 +300,7 @@ namespace QFun.Migrations
                             ChallengeId = 1,
                             Description = "i did this",
                             Path = "imagehere",
-                            TimeOfUpload = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            TimeOfUpload = new DateTime(2020, 5, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
@@ -411,7 +411,7 @@ namespace QFun.Migrations
                         .IsRequired();
 
                     b.HasOne("QFun.Data.DbTables.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("Contributions")
                         .HasForeignKey("UserId");
                 });
 

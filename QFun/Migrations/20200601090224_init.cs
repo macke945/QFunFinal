@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace QFun.Migrations
 {
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -241,7 +241,7 @@ namespace QFun.Migrations
                 columns: new[] { "Id", "ChallengeId", "Description", "Path", "TimeOfUpload", "UserId" },
                 values: new object[,]
                 {
-                    { 1, 1, "i did this", "imagehere", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null },
+                    { 1, 1, "i did this", "imagehere", new DateTime(2020, 5, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), null },
                     { 2, 1, "my test 1", "test1", new DateTime(2020, 5, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), null },
                     { 3, 2, "my test 2", "test2", new DateTime(2020, 5, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), null },
                     { 4, 2, "my test 3", "test3", new DateTime(2020, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), null },
