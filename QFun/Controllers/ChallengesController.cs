@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
@@ -17,11 +19,13 @@ namespace QFun.Controllers
         
         private readonly ChallengeServices challengeService;
         private readonly ContributionServices contributionServices;
+        private readonly IHostingEnvironment hostingEnvironment;
 
-        public ChallengesController(ChallengeServices challengeService, ContributionServices contributionServices)
+        public ChallengesController(ChallengeServices challengeService, ContributionServices contributionServices, IHostingEnvironment hostingEnvironment)
         {
             this.challengeService = challengeService;
             this.contributionServices = contributionServices;
+            this.hostingEnvironment = hostingEnvironment;
         }
 
 
@@ -83,13 +87,27 @@ namespace QFun.Controllers
         {
             if (ModelState.IsValid)
             {
-                var contribution = new Contribution();
 
-                contribution.Path = vm.Path;
-                contribution.Description = vm.Description;
-                contribution.TimeOfUpload = DateTime.UtcNow.ToLocalTime();
-                contribution.ChallengeId = id;
-                contributionServices.AddContribution(contribution);
+                string uniqueFileName = null;
+
+                if (vm.Image != null)
+                {
+
+                    string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + vm.Image.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    vm.Image.CopyTo(new FileStream(filePath, FileMode.Create));
+
+                    var contribution = new Contribution();
+
+                    contribution.Path = filePath;
+                    contribution.Description = vm.Description;
+                    contribution.ChallengeId = id;
+                    contribution.UserId = vm.UserId;
+                    contributionServices.AddContribution(contribution);
+
+                }
+
 
                 return RedirectToAction(nameof(Contributions));
             }
