@@ -14,7 +14,7 @@ namespace QFun.Controllers
 {
     public class ChallengesController : Controller
     {
-        
+
         private readonly ChallengeServices challengeService;
         private readonly ContributionServices contributionServices;
         private readonly VoteServices voteServices;
@@ -98,7 +98,7 @@ namespace QFun.Controllers
                 var UserName = contributionServices.GetUserNameById(vm.UserId);
                 UserName = vm.UserName;
                 contributionServices.AddContribution(contribution);
-                if(!string.IsNullOrEmpty(VoteButton))
+                if (!string.IsNullOrEmpty(VoteButton))
                 {
                     var vote = new Vote();
                     vote.UserId = vm.UserId;
@@ -111,6 +111,5 @@ namespace QFun.Controllers
 
             return RedirectToAction("Error", "Home", "");
         }
-
     }
 }
