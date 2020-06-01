@@ -18,6 +18,28 @@ namespace QFun.Services
             this.context = context;
         }
 
+
+        public IList<ApplicationUser> GetAllUsers()
+        {
+            return context.ApplicationUser
+                .Include(a => a.Contributions)
+                .ThenInclude(c => c.Votes).ToList();
+        }
+
+        public int CountUserVotes(ApplicationUser user)
+        {
+            //for debugging
+            var random = new Random();
+            int votes = random.Next(1, 99);
+
+            //int votes = 0;
+
+            foreach (var cont in user.Contributions)
+                votes += cont.Votes.Count();
+
+            return votes;
+        }
+
         public IList<string> GetAllUsersId()
         {
             return context.Users

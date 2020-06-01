@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using QFun.Data.DbTables;
 using System;
 using System.Collections.Generic;
@@ -19,5 +20,6 @@ namespace QFun.Models
         public string UserName { get; set; }
         public Challenge Challenge { get; set; }
         public List<Vote> Votes { get; set; } = new List<Vote>();
+        public IFormFile Image { get; set; }
     }
 }

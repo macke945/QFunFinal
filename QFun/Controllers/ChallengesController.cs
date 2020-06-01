@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
@@ -18,12 +20,14 @@ namespace QFun.Controllers
         private readonly ChallengeServices challengeService;
         private readonly ContributionServices contributionServices;
         private readonly VoteServices voteServices;
+        private readonly IHostingEnvironment hostingEnvironment;
 
-        public ChallengesController(ChallengeServices challengeService, ContributionServices contributionServices)
+        public ChallengesController(ChallengeServices challengeService, ContributionServices contributionServices, IHostingEnvironment hostingEnvironment)
         {
             this.challengeService = challengeService;
             this.contributionServices = contributionServices;
             this.voteServices = voteServices;
+            this.hostingEnvironment = hostingEnvironment;
         }
 
 
@@ -83,28 +87,48 @@ namespace QFun.Controllers
         {
             if (ModelState.IsValid)
             {
-                var contribution = new Contribution();
-                contribution.Path = vm.Path;
-                contribution.Description = vm.Description;
-                contribution.TimeOfUpload = DateTime.UtcNow.ToLocalTime();
-                contribution.ChallengeId = id;
+                // var contribution = new Contribution();
+                // contribution.Path = vm.Path;
+                // contribution.Description = vm.Description;
+                // contribution.TimeOfUpload = DateTime.UtcNow.ToLocalTime();
+                // contribution.ChallengeId = id;
 
-                var userIds = contributionServices.GetAllUsersId();
-                foreach (var userId in userIds)
+               
+
+                string uniqueFileName = null;
+
+                if (vm.Image != null)
                 {
-                    vm.UserId = contributionServices.GetUserIdById(userId);
+
+                    string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + vm.Image.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    vm.Image.CopyTo(new FileStream(filePath, FileMode.Create));
+
+                    var contribution = new Contribution();
+
+                    contribution.Path = filePath;
+                    contribution.Description = vm.Description;
+                    contribution.ChallengeId = id;
+                     var userIds = contributionServices.GetAllUsersId();
+                    foreach (var userId in userIds)
+                    {
+                        vm.UserId = contributionServices.GetUserIdById(userId);
+                    }
+                    contribution.UserId = vm.UserId;
+                    var UserName = contributionServices.GetUserNameById(vm.UserId);
+                    UserName = vm.UserName;
+                    contributionServices.AddContribution(contribution);
+                    if (!string.IsNullOrEmpty(VoteButton))
+                    {
+                        var vote = new Vote();
+                        vote.UserId = vm.UserId;
+                        vote.ContributionId = vm.ContributionsId;
+                        voteServices.AddVote(vote);
+                    }
+
                 }
-                contribution.UserId = vm.UserId;
-                var UserName = contributionServices.GetUserNameById(vm.UserId);
-                UserName = vm.UserName;
-                contributionServices.AddContribution(contribution);
-                if (!string.IsNullOrEmpty(VoteButton))
-                {
-                    var vote = new Vote();
-                    vote.UserId = vm.UserId;
-                    vote.ContributionId = vm.ContributionsId;
-                    voteServices.AddVote(vote);
-                }
+
 
                 return RedirectToAction(nameof(Contributions));
             }
