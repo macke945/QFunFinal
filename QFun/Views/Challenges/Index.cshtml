@@ -15,17 +15,17 @@
             <form asp-action="Index">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Title" class="control-label"></label>
+                    <label asp-for="Title" class="control-label">Titel</label>
                     <input asp-for="Title" class="form-control" />
                     <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
+                    <label asp-for="Description" class="control-label">Beskrivning</label>
                     <input asp-for="Description" class="form-control" />
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="submit" value="Skapa" class="btn btn-primary" />
                 </div>
             </form>
         </div>
@@ -38,10 +38,10 @@
     <thead>
         <tr>
             <th>
-                Title
+                Titel
             </th>
             <th>
-                Description
+                Beskrivning
             </th>
 
         </tr>
@@ -60,7 +60,7 @@
                 </td>
                 <td>
                     <a asp-action="Contributions" asp-route-id="@item.Id">
-                        See Contributions/Add Contributions
+                        Lägg till bidrag
                     </a>
                 </td>
             </tr>
