@@ -96,29 +96,27 @@ namespace QFun.Controllers
                 if (vm.Image != null)
                 {
 
-                    string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + vm.Image.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                    vm.Image.CopyTo(new FileStream(filePath, FileMode.Create));
+                    if (contributionServices.IsImage(vm.Image) && vm.Image.Length < (150 * 1024))
+                    {
+                        string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + vm.Image.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                        vm.Image.CopyTo(new FileStream(filePath, FileMode.Create));
 
-                    var contribution = new Contribution();
+                        var contribution = new Contribution();
 
-                    contribution.Path = uniqueFileName;
-                    contribution.Description = vm.Description;
-                    contribution.ChallengeId = id;
-                    // var userIds = contributionServices.GetAllUsersId();
-                    //foreach (var userId in userIds)
-                    //{
-                    //    vm.UserId = contributionServices.GetUserIdById(userId);
-                    //}
+                        contribution.Path = uniqueFileName;
+                        contribution.Description = vm.Description;
+                        contribution.ChallengeId = id;
 
-                    ClaimsPrincipal currentUser = this.User;
-                    var currentUserId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+                        ClaimsPrincipal currentUser = this.User;
+                        var currentUserId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-                    contribution.UserId = currentUserId;
-                    var UserName = contributionServices.GetUserNameById(currentUserId);
-                    UserName = vm.UserName;
-                    contributionServices.AddContribution(contribution);
+                        contribution.UserId = currentUserId;
+                        var UserName = contributionServices.GetUserNameById(currentUserId);
+                        UserName = vm.UserName;
+                        contributionServices.AddContribution(contribution);
+                    }
 
                 }
 
@@ -136,7 +134,7 @@ namespace QFun.Controllers
 
             if (ModelState.IsValid)
             {
-                
+
 
                 ClaimsPrincipal currentUser = this.User;
                 var currentUserId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
