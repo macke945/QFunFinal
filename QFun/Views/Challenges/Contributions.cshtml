@@ -71,7 +71,9 @@
 
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem=> item.Votes)
+                    @Html.DisplayFor(modelItem => item.Votes.Count)
+
+                    <button type="submit" value="VoteButton" name="VoteButton" class="btn-outline-primary">Vote</button>
                 </td>
             </tr>
         }

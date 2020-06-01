@@ -63,7 +63,6 @@ namespace QFun.Services
 
 
 
-
         public IList<Contribution> GetAllContributionsByUserId(string id)
         {
             return context.Contribution.Where(c => c.UserId == id)

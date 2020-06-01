@@ -17,11 +17,13 @@ namespace QFun.Controllers
         
         private readonly ChallengeServices challengeService;
         private readonly ContributionServices contributionServices;
+        private readonly VoteServices voteServices;
 
         public ChallengesController(ChallengeServices challengeService, ContributionServices contributionServices)
         {
             this.challengeService = challengeService;
             this.contributionServices = contributionServices;
+            this.voteServices = voteServices;
         }
 
 
@@ -77,7 +79,7 @@ namespace QFun.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Contributions(ContributionsVm vm, int id)
+        public async Task<IActionResult> Contributions(ContributionsVm vm, int id, string VoteButton)
         {
             if (ModelState.IsValid)
             {
@@ -96,29 +98,14 @@ namespace QFun.Controllers
                 var UserName = contributionServices.GetUserNameById(vm.UserId);
                 UserName = vm.UserName;
                 contributionServices.AddContribution(contribution);
+                if(!string.IsNullOrEmpty(VoteButton))
+                {
+                    var vote = new Vote();
+                    vote.UserId = vm.UserId;
+                    vote.ContributionId = vm.ContributionsId;
+                    voteServices.AddVote(vote);
+                }
 
-                return RedirectToAction(nameof(Contributions));
-            }
-
-            return RedirectToAction("Error", "Home", "");
-        }
-
-
-
-        int i = 0;
-
-        public IActionResult Vote()
-        {
-            var vm = new ContributionsVm();
-            return View(vm);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Vote(ContributionsVm vm)
-        {
-            if (ModelState.IsValid)
-            {
                 return RedirectToAction(nameof(Contributions));
             }
 
