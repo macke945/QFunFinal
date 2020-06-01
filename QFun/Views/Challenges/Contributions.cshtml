@@ -71,7 +71,7 @@
                     @Html.DisplayFor(modelItem => item.Votes.Count)
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        <a asp-action="Votes" asp-route-id="@item.Id">rösta</a>
+                        <a asp-action="Votes" asp-route-id1="@item.Id" asp-route-id2="@Model.ChallengeId">rösta</a>
                     }
                     @*<input type="submit" name="VoteButton" value="Rösta" class="btn btn-success"/>*@
                 </td>

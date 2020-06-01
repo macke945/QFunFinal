@@ -93,8 +93,6 @@ namespace QFun.Services
             return votes;
         }
 
-
-
         public IList<Contribution> GetAllContributionsByUserId(string id)
         {
             return context.Contribution.Where(c => c.UserId == id)

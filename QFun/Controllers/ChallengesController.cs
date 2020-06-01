@@ -87,18 +87,10 @@ namespace QFun.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Contributions(ContributionsVm vm, int id, string VoteButton)
+        public async Task<IActionResult> Contributions(ContributionsVm vm, int id)
         {
             if (ModelState.IsValid)
             {
-                // var contribution = new Contribution();
-                // contribution.Path = vm.Path;
-                // contribution.Description = vm.Description;
-                // contribution.TimeOfUpload = DateTime.UtcNow.ToLocalTime();
-                // contribution.ChallengeId = id;
-
-               
-
                 string uniqueFileName = null;
 
                 if (vm.Image != null)
@@ -127,13 +119,6 @@ namespace QFun.Controllers
                     var UserName = contributionServices.GetUserNameById(currentUserId);
                     UserName = vm.UserName;
                     contributionServices.AddContribution(contribution);
-                    //if (!string.IsNullOrEmpty(VoteButton))
-                    //{
-                    //    var vote = new Vote();
-                    //    vote.UserId = vm.UserId;
-                    //    vote.ContributionId = vm.ContributionsId;
-                    //    voteServices.AddVote(vote);
-                    //}
 
                 }
 
@@ -146,7 +131,7 @@ namespace QFun.Controllers
             return RedirectToAction("Error", "Home", "");
         }
 
-        public async Task<IActionResult> Votes(ContributionsVm vm, int id)
+        public async Task<IActionResult> Votes(int id1, int id2)
         {
 
             if (ModelState.IsValid)
@@ -158,7 +143,7 @@ namespace QFun.Controllers
 
                 var vote = new Vote();
                 vote.UserId = currentUserId;
-                vote.ContributionId = id;
+                vote.ContributionId = id1;
 
                 if (voteServices.UserAbleToVote(vote))
                 {
@@ -170,8 +155,17 @@ namespace QFun.Controllers
                 }
             }
 
+            Debug.WriteLine(id2);
+            //return Redirect(Request.UrlReferrer.PathAndQuery);
+            string url = "https://localhost:44384/Challenges/Contributions";
+            url += "/" + id2;
 
-            return RedirectToAction(nameof(Contributions));
+            return Redirect(url);
+
+
+            //return RedirectToAction(@"Contributions/" + id2);
+
+            //return RedirectToAction(nameof(Contributions));
         }
     }
 }
