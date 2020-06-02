@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using QFun.Data;
 using QFun.Models;
+using QFun.Services;
 
 namespace QFun.Controllers
 {
@@ -16,14 +17,26 @@ namespace QFun.Controllers
     {
         private readonly ILogger<MyPageController> _logger;
         private readonly ApplicationDbContext _context;
-        public MyPageController(ILogger<MyPageController> logger, ApplicationDbContext context)
+        private readonly ContributionServices _contributionService;
+        public MyPageController(ILogger<MyPageController> logger, ApplicationDbContext context, ContributionServices contributionService)
         {
             _logger = logger;
             _context = context;
+            _contributionService = contributionService;
         }
 
         public IActionResult Index()
         {
+            var identity = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userContributions = _contributionService.GetAllContributionsByUserId(identity);
+
+            return View(userContributions);
+        }
+
+        public IActionResult _User()
+        {
+            
+
             return View();
         }
 

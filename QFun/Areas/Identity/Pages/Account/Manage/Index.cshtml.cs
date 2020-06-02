@@ -36,6 +36,7 @@ namespace QFun.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            public string UserName { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -47,7 +48,8 @@ namespace QFun.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                UserName = userName
             };
         }
 
@@ -85,6 +87,17 @@ namespace QFun.Areas.Identity.Pages.Account.Manage
                 if (!setPhoneResult.Succeeded)
                 {
                     StatusMessage = "Unexpected error when trying to set phone number.";
+                    return RedirectToPage();
+                }
+            }
+
+            var userName = await _userManager.GetUserNameAsync(user);
+            if (Input.UserName != userName)
+            {
+                var setUserResult = await _userManager.SetUserNameAsync(user, Input.UserName);
+                if (!setUserResult.Succeeded)
+                {
+                    StatusMessage = "Unexpected error when trying to set user name";
                     return RedirectToPage();
                 }
             }

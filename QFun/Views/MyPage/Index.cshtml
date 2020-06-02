@@ -2,6 +2,7 @@
 @inject SignInManager<QFun.Data.DbTables.ApplicationUser> SignInManager
 @inject UserManager<QFun.Data.DbTables.ApplicationUser> UserManager
 @inject RoleManager<IdentityRole> RoleManager
+@model IEnumerable<QFun.Data.DbTables.Contribution>
 @{
     ViewData["Title"] = "MyPage";
 }
@@ -15,8 +16,8 @@
     }
     else
     {
-        <partial name="_User.cshtml" />
-
+        @*<partial name="_User.cshtml" />*@
+        await Html.PartialAsync("_User", Model);
     }
 }
 else
