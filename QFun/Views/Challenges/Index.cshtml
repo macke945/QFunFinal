@@ -4,6 +4,7 @@
 @inject UserManager<QFun.Data.DbTables.ApplicationUser> UserManager
 @inject RoleManager<IdentityRole> RoleManager
 
+    <h1>Utmaningar</h1>
 @{
     ViewData["Title"] = "Challenges";
 }
@@ -34,14 +35,17 @@
 
 }
 
-<table class="table">
-    <thead>
+<table class="table table-striped table table-bordered">
+    <thead class="thead-dark">
         <tr>
             <th>
                 Titel
             </th>
             <th>
                 Beskrivning
+            </th>
+            <th>
+                Lägg till bidrag
             </th>
 
         </tr>
