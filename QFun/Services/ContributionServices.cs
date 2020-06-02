@@ -17,6 +17,15 @@ namespace QFun.Services
 
 
 
+        public IList<Contribution> GetAllContributions()
+        {
+            return context.Contribution
+                .Include(c => c.Challenge)
+                .Include(c => c.User)
+                .Include(c => c.Votes)
+                .ToList();
+        }
+
         public bool IsImage(IFormFile formFile)
         {
             if (!string.Equals(formFile.ContentType, "image/jpg", StringComparison.OrdinalIgnoreCase) &&
@@ -57,10 +66,10 @@ namespace QFun.Services
         public int CountUserVotes(ApplicationUser user)
         {
             //for debugging
-            var random = new Random();
-            int votes = random.Next(1, 99);
+            //var random = new Random();
+            //int votes = random.Next(1, 99);
 
-            //int votes = 0;
+            int votes = 0;
 
             foreach (var cont in user.Contributions)
                 votes += cont.Votes.Count();

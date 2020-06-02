@@ -4,24 +4,23 @@
 @inject UserManager<QFun.Data.DbTables.ApplicationUser> UserManager
 @inject RoleManager<IdentityRole> RoleManager
 
-<h1>Contributions</h1>
-
+<h1>Bidrag</h1>
 
 @if (SignInManager.IsSignedIn(User))
 {
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4" >
         <form enctype="multipart/form-data" asp-action="Contributions" asp-route-id="@Model.ChallengeId">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group row">
+            <div  class="form-group">
                 <label asp-for="Image" class="control-label">Bild</label>
-                <input asp-for="Image" class="form-control" />
+                <input asp-for="Image" class="form-control-file" />
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label">Beskrivning</label>
                 <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <span asp-validation-for="Description" class="text-danger" ></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Skapa" class="btn btn-primary" />
@@ -34,8 +33,8 @@
 
 
 
-<table class="table">
-    <thead>
+<table class="table table-striped table table-bordered">
+    <thead class="thead-dark">
         <tr>
             <th>
                 Bild
@@ -49,6 +48,9 @@
             <th>
                 Röster
             </th>
+            <th>
+                Ta bort
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -58,7 +60,7 @@
 
             <tr>
                 <td>
-                    <img src="~/images/@Url.Content(item.Path)" alt="Image not loaded" />
+                    <img src="~/images/@Url.Content(item.Path)" alt="Image not loaded" width="200" />
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
@@ -80,7 +82,7 @@
                     {
                         <a asp-action="DeleteContributionAdmin" asp-route-id1="@item.Id" asp-route-id2="@Model.ChallengeId">Ta bort</a>
                     }
-                    @if (SignInManager.IsSignedIn(User) && User.Identity.Name == item.User.UserName)
+                    @if (SignInManager.IsSignedIn(User) && User.Identity.Name == item.User.UserName && !User.IsInRole("Admin"))
                     {
                         <a asp-action="DeleteContributionUser" asp-route-id1="@item.Id" asp-route-id2="@Model.ChallengeId">Ta Bort</a>
                     }
