@@ -1,7 +1,7 @@
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<QFun.Data.DbTables.ApplicationUser> UserManager
 @inject SignInManager<QFun.Data.DbTables.ApplicationUser> SignInManager
-
+@model QFun.Models.MyPageUserVm
 @{
     ViewData["Title"] = "_User";
 }
@@ -12,19 +12,19 @@
     <li class="breadcrumb-item mt-lg-auto"><a asp-area="Views" asp-controller="MyPage" asp-action="_Chart">Utmanings statistik </a></li>
 </ol>
 
-<a asp-action="_User">
-    @if (Model == null)
+
+@if (Model == null)
+{
+    <span>no items found</span>
+}
+else
+{
+    @foreach (var item in Model.Contributions)
     {
-        <span>no items found</span>
+        @item.Description
     }
-    else
-    {
-        @foreach (var item in Model)
-        {
-            @item.Description
-        }
-    }
-</a>
+}
+
 
 
 
