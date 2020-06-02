@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
- using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using QFun.Data;
 using QFun.Data.DbTables;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,6 +15,32 @@ namespace QFun.Services
     {
         private readonly ApplicationDbContext context;
 
+
+
+        public bool IsImage(IFormFile formFile)
+        {
+            if (!string.Equals(formFile.ContentType, "image/jpg", StringComparison.OrdinalIgnoreCase) &&
+            !string.Equals(formFile.ContentType, "image/jpeg", StringComparison.OrdinalIgnoreCase) &&
+            !string.Equals(formFile.ContentType, "image/pjpeg", StringComparison.OrdinalIgnoreCase) &&
+            !string.Equals(formFile.ContentType, "image/gif", StringComparison.OrdinalIgnoreCase) &&
+            !string.Equals(formFile.ContentType, "image/x-png", StringComparison.OrdinalIgnoreCase) &&
+            !string.Equals(formFile.ContentType, "image/png", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+
+            var postedFileExtension = Path.GetExtension(formFile.FileName);
+            if (!string.Equals(postedFileExtension, ".jpg", StringComparison.OrdinalIgnoreCase)
+                && !string.Equals(postedFileExtension, ".png", StringComparison.OrdinalIgnoreCase)
+                && !string.Equals(postedFileExtension, ".gif", StringComparison.OrdinalIgnoreCase)
+                && !string.Equals(postedFileExtension, ".jpeg", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+           
+            return true;
+        }
         public ContributionServices(ApplicationDbContext context)
         {
             this.context = context;
@@ -48,7 +76,7 @@ namespace QFun.Services
         public ApplicationUser GetUserById(string id)
         {
             return context.Users.Find(id);
-        } 
+        }
 
         public IList<string> GetAllUsersId()
         {
@@ -63,7 +91,7 @@ namespace QFun.Services
                 .Find(id);
 
             return user.UserName;
-                
+
         }
 
         public string GetUserIdById(string id)
@@ -73,13 +101,13 @@ namespace QFun.Services
 
             return user.Id;
         }
-        
+
 
         public int GetUserVotes(string id)
         {
             //for debugging
             var random = new Random();
-            int votes =random.Next(1, 99);
+            int votes = random.Next(1, 99);
 
             //int votes = 0;
 
