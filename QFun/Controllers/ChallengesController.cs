@@ -92,21 +92,22 @@ namespace QFun.Controllers
             if (ModelState.IsValid)
             {
                 string uniqueFileName = null;
+                vm.ChallengeId = id;
 
                 if (vm.Image != null)
                 {
 
-                    if (contributionServices.IsImage(vm.Image) && vm.Image.Length < (5 * 1024 * 1024))
+                    if (contributionServices.IsImage(vm.Image) && vm.Image.Length < (1 * 1024 * 1024))
                     {
                         string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
                         uniqueFileName = Guid.NewGuid().ToString() + "_" + vm.Image.FileName;
                         string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                        
-                        using(var fileStream = new FileStream(filePath, FileMode.Create))
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
                             vm.Image.CopyTo(fileStream);
                         }
-                        
+
                         //vm.Image.CopyTo(new FileStream(filePath, FileMode.Create));
 
                         var contribution = new Contribution();
@@ -127,9 +128,15 @@ namespace QFun.Controllers
                 }
 
 
-                return RedirectToAction(nameof(Contributions));
+                return RedirectToAction(nameof(Challenge));
             }
 
+            else if (vm.Image == null || vm.Image.Length > (1 * 1024 * 1024) || !contributionServices.IsImage(vm.Image))
+            {
+                vm.ChallengeId = id;
+                vm.ShowImageError = false;
+                return View(vm);
+            }
 
 
             return RedirectToAction("Error", "Home", "");

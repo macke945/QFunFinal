@@ -12,15 +12,16 @@
     <div class="col-md-4" >
         <form enctype="multipart/form-data" asp-action="Contributions" asp-route-id="@Model.ChallengeId">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div  class="form-group">
+            <div class="form-group">
                 <label asp-for="Image" class="control-label">Bild</label>
                 <input asp-for="Image" class="form-control-file" />
                 <span asp-validation-for="Image" class="text-danger"></span>
+                <div class="text-danger" hidden=@Model.ShowImageError>Bilden är för stor eller inte jpg/gif/png</div>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label">Beskrivning</label>
                 <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger" ></span>
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Skapa" class="btn btn-primary" />
@@ -58,36 +59,37 @@
         {
        
 
-            <tr>
-                <td>
-                    <img src="~/images/@Url.Content(item.Path)" alt="Image not loaded" width="200" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.UserName)
+        <tr>
+            <td>
+                <img src="~/images/@Url.Content(item.Path)" alt="Image not loaded" width="200" />
+            </td>
 
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Votes.Count)
-                    @if (SignInManager.IsSignedIn(User))
-                    {
-                        <a asp-action="Votes" asp-route-id1="@item.Id" asp-route-id2="@Model.ChallengeId">rösta</a>
-                    }
-                    @*<input type="submit" name="VoteButton" value="Rösta" class="btn btn-success"/>*@
-                </td>
-                <td>
-                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-                    {
-                        <a asp-action="DeleteContributionAdmin" asp-route-id1="@item.Id" asp-route-id2="@Model.ChallengeId">Ta bort</a>
-                    }
-                    @if (SignInManager.IsSignedIn(User) && User.Identity.Name == item.User.UserName && !User.IsInRole("Admin"))
-                    {
-                        <a asp-action="DeleteContributionUser" asp-route-id1="@item.Id" asp-route-id2="@Model.ChallengeId">Ta Bort</a>
-                    }
-                </td>
-            </tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Votes.Count)
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a asp-action="Votes" asp-route-id1="@item.Id" asp-route-id2="@Model.ChallengeId">rösta</a>
+                }
+                @*<input type="submit" name="VoteButton" value="Rösta" class="btn btn-success"/>*@
+            </td>
+            <td>
+                @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                {
+                    <a asp-action="DeleteContributionAdmin" asp-route-id1="@item.Id" asp-route-id2="@Model.ChallengeId">Ta bort</a>
+                }
+                @if (SignInManager.IsSignedIn(User) && User.Identity.Name == item.User.UserName && !User.IsInRole("Admin"))
+                {
+                    <a asp-action="DeleteContributionUser" asp-route-id1="@item.Id" asp-route-id2="@Model.ChallengeId">Ta Bort</a>
+                }
+            </td>
+        </tr>
        
         }
         
