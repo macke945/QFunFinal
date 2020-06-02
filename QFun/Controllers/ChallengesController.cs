@@ -101,7 +101,13 @@ namespace QFun.Controllers
                         string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
                         uniqueFileName = Guid.NewGuid().ToString() + "_" + vm.Image.FileName;
                         string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                        vm.Image.CopyTo(new FileStream(filePath, FileMode.Create));
+                        
+                        using(var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            vm.Image.CopyTo(fileStream);
+                        }
+                        
+                        //vm.Image.CopyTo(new FileStream(filePath, FileMode.Create));
 
                         var contribution = new Contribution();
 
