@@ -96,7 +96,7 @@ namespace QFun.Controllers
                 if (vm.Image != null)
                 {
 
-                    if (contributionServices.IsImage(vm.Image) && vm.Image.Length < (150 * 1024))
+                    if (contributionServices.IsImage(vm.Image) && vm.Image.Length < (5 * 1024 * 1024))
                     {
                         string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
                         uniqueFileName = Guid.NewGuid().ToString() + "_" + vm.Image.FileName;
