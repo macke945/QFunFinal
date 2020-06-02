@@ -17,6 +17,15 @@ namespace QFun.Services
 
 
 
+        public IList<Contribution> GetAllContributions()
+        {
+            return context.Contribution
+                .Include(c => c.Challenge)
+                .Include(c => c.User)
+                .Include(c => c.Votes)
+                .ToList();
+        }
+
         public bool IsImage(IFormFile formFile)
         {
             if (!string.Equals(formFile.ContentType, "image/jpg", StringComparison.OrdinalIgnoreCase) &&
