@@ -128,7 +128,7 @@ namespace QFun.Controllers
                 }
 
 
-                return RedirectToAction(nameof(Challenge));
+                return RedirectToAction(nameof(Contributions));
             }
 
             else if (vm.Image == null || vm.Image.Length > (5 * 1024 * 1024) || !contributionServices.IsImage(vm.Image))
