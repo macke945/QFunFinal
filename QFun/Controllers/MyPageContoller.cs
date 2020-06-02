@@ -27,8 +27,10 @@ namespace QFun.Controllers
 
         public IActionResult Index()
         {
-
-            return View();
+            var vm = new MyPageUserVm();
+            var identity = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            vm.Contributions = _contributionService.GetAllContributionsByUserId(identity);
+            return View(vm);
         }
 
         public IActionResult _User()
