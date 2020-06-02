@@ -66,10 +66,10 @@ namespace QFun.Services
         public int CountUserVotes(ApplicationUser user)
         {
             //for debugging
-            var random = new Random();
-            int votes = random.Next(1, 99);
+            //var random = new Random();
+            //int votes = random.Next(1, 99);
 
-            //int votes = 0;
+            int votes = 0;
 
             foreach (var cont in user.Contributions)
                 votes += cont.Votes.Count();

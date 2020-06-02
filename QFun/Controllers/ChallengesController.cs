@@ -172,6 +172,21 @@ namespace QFun.Controllers
 
             if (ModelState.IsValid)
             {
+                string fileFolder = Path.Combine(hostingEnvironment.WebRootPath, @"images\");
+                var contributionToDelete = contributionServices.GetContributionById(id1);
+                string fileToDelete = fileFolder + contributionToDelete.Path;
+
+
+                if (System.IO.File.Exists(fileToDelete))
+                {
+                    System.IO.File.Delete(fileToDelete);
+                }
+                else
+                {
+                    Debug.WriteLine("file doesn't exists");
+                }
+
+
                 contributionServices.RemoveContributionById(id1);
             }
 
@@ -187,6 +202,19 @@ namespace QFun.Controllers
 
             if (ModelState.IsValid)
             {
+                string fileFolder = Path.Combine(hostingEnvironment.WebRootPath, @"images\");
+                var contributionToDelete = contributionServices.GetContributionById(id1);
+                string fileToDelete = fileFolder + contributionToDelete.Path;
+
+                if (System.IO.File.Exists(fileToDelete))
+                {
+                    System.IO.File.Delete(fileToDelete);
+                }
+                else
+                {
+                    Debug.WriteLine("file doesn't exists");
+                }
+
                 contributionServices.RemoveContributionById(id1);
             }
 
