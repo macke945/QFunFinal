@@ -4,7 +4,7 @@
     ViewData["Title"] = "_User";
 }
 
-    <h1>@((await UserManager.GetUserAsync(User)).NormalizedUserName)</h1>
+<h2>@((await UserManager.GetUserAsync(User)).NormalizedUserName)</h2>
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a asp-area="Views" asp-controller="MyPage" asp-action="_AboutMe">Om mig</a></li>
     <li class="breadcrumb-item mt-lg-auto"><a asp-area="Views" asp-controller="MyPage" asp-action="_Chart">Utmanings statistik </a></li>

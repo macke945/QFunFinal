@@ -57,8 +57,7 @@ namespace QFun.Controllers
         public async Task<IActionResult> _AboutMe()
         {
             var vm = new AboutMeVm();
-            //Username
-            var user = _context.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
             vm.AboutMe = user.AboutMe;
             return View(vm);
         }
