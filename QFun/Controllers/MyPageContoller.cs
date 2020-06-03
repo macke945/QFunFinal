@@ -52,13 +52,15 @@ namespace QFun.Controllers
                              b.ChallengeId
                              join c in _context.Vote on b.Id equals c.ContributionId
                              where identity == b.UserId
-                             select new { a.Title, c.Contribution.Votes.Count }).Distinct();
+                             select new { a.Id, a.Title, b.TimeOfUpload, c.Contribution.Votes.Count }).Distinct();
 
             foreach (var item in tempModel)
             {
                 var userdata = new UserData();
 
+                userdata.ChallengeId = item.Id;
                 userdata.ChallengeName = item.Title;
+                userdata.ContributionDate = item.TimeOfUpload;
                 userdata.Votes = item.Count;
                 newlist.Add(userdata);
 
