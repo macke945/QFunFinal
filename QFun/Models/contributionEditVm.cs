@@ -12,5 +12,7 @@ namespace QFun.Models
         public int Id { get; set; }
         public string Description { get; set; }
         public int ChallengeId { get; set; }
+        public string UserName { get; set; }
+        public bool ShowEditCheatError { get; internal set; }
     }
 }
