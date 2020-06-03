@@ -8,27 +8,7 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-<div class="row">
-    <div class="col-md-4" >
-        <form enctype="multipart/form-data" asp-action="Contributions" asp-route-id="@Model.ChallengeId">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Image" class="control-label">Bild</label>
-                <input asp-for="Image" class="form-control-file" />
-                <span asp-validation-for="Image" class="text-danger"></span>
-                <div class="text-danger" hidden=@Model.ShowImageError>Bilden är för stor eller inte jpg/gif/png</div>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label">Beskrivning</label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Skapa" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+    <a class="btn btn-primary" asp-action="AddContributions" asp-route-id="@Model.ChallengeId">Lägg till bidrag</a>
 }
 
 
@@ -49,15 +29,25 @@
             <th>
                 Röster
             </th>
-            <th>
-                Ta bort
-            </th>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <th>
+                    Redigera
+                </th>
+            }
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <th>
+                    Ta bort
+                </th>
+            }
+
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Contributions)
         {
-       
+
 
         <tr>
             <td>
@@ -82,17 +72,28 @@
             <td>
                 @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                 {
+                    <a asp-action="EditContributions" asp-route-id="@item.Id">Redigera</a>
+                }
+                @if (SignInManager.IsSignedIn(User) && User.Identity.Name == item.User.UserName && !User.IsInRole("Admin"))
+                {
+                    <a asp-action="EditContributions" asp-route-id="@item.Id">Redigera</a>
+                }
+            </td>
+            <td>
+                @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                {
                     <a asp-action="DeleteContributionAdmin" asp-route-id1="@item.Id" asp-route-id2="@Model.ChallengeId">Ta bort</a>
                 }
                 @if (SignInManager.IsSignedIn(User) && User.Identity.Name == item.User.UserName && !User.IsInRole("Admin"))
                 {
-                    <a asp-action="DeleteContributionUser" asp-route-id1="@item.Id" asp-route-id2="@Model.ChallengeId">Ta Bort</a>
+                <a asp-action=" DeleteContributionUser" asp-route-id1="@item.Id" asp-route-id2="@Model.ChallengeId">Ta bort</a>
                 }
             </td>
+
         </tr>
-       
+
         }
-        
+
 
     </tbody>
 </table>

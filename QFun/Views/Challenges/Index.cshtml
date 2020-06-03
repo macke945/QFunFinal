@@ -4,13 +4,12 @@
 @inject UserManager<QFun.Data.DbTables.ApplicationUser> UserManager
 @inject RoleManager<IdentityRole> RoleManager
 
-    <h1>Utmaningar</h1>
+<h1>Utmaningar</h1>
 @{
     ViewData["Title"] = "Challenges";
 }
 @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin") == true)
 {
-
     <div class="row">
         <div class="col-md-4">
             <form asp-action="Index">
@@ -31,6 +30,7 @@
             </form>
         </div>
     </div>
+
 
 
 }

@@ -34,6 +34,11 @@ namespace QFun.Controllers
             this.userManager = userManager;
         }
 
+        public IActionResult AddContributions()
+        {
+            var vm = new ContributionsVm();
+            return View(vm);
+        }
 
         public IActionResult Index()
         {
@@ -63,6 +68,8 @@ namespace QFun.Controllers
         }
 
 
+        
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -84,10 +91,49 @@ namespace QFun.Controllers
 
         }
 
+        public IActionResult EditContributions(int id)
+        {
+            var vm = new contributionEditVm();
+            var contriToEdit = contributionServices.GetContributionById(id);
+            vm.Id = contriToEdit.Id;
+            vm.ChallengeId = contriToEdit.ChallengeId;
+            vm.Description = contriToEdit.Description;
+            return View(vm);
+        }
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Contributions(ContributionsVm vm, int id)
+        public async Task<IActionResult> EditContributions(contributionEditVm vm)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var contriToEdit = contributionServices.GetContributionById(vm.Id);
+
+                contriToEdit.Description = vm.Description;
+                
+                contributionServices.EditContribution(contriToEdit);
+
+                string url = "https://localhost:44384/Challenges/Contributions";
+                url += "/" + contriToEdit.ChallengeId;
+
+                return Redirect(url);
+
+            }
+
+
+            return RedirectToAction("Error", "Home", "");
+
+
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddContributions(ContributionsVm vm, int id)
         {
             if (ModelState.IsValid)
             {
@@ -128,7 +174,10 @@ namespace QFun.Controllers
                 }
 
 
-                return RedirectToAction(nameof(Contributions));
+                string url = "https://localhost:44384/Challenges/Contributions";
+                url += "/" + id;
+
+                return Redirect(url);
             }
 
             else if (vm.Image == null || vm.Image.Length > (5 * 1024 * 1024) || !contributionServices.IsImage(vm.Image))
