@@ -118,7 +118,7 @@ namespace QFun.Controllers
                 var currentUserId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
 
                 var UserName = contributionServices.GetUserNameById(currentUserId);
-                UserName = vm.UserName;
+                vm.UserName = UserName;
                 if (User.Identity.Name == vm.UserName)
                 {
 
@@ -156,12 +156,6 @@ namespace QFun.Controllers
                 vm.ChallengeId = id;
                 ClaimsPrincipal currentUser = this.User;
                 var currentUserId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
-                if (currentUser.Identity.IsAuthenticated == false)
-                {
-                    vm.ChallengeId = id;
-                    return Redirect(url);
-
-                }
                 if (currentUserId != null)
                 {
 
