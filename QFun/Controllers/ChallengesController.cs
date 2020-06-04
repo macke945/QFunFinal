@@ -36,7 +36,7 @@ namespace QFun.Controllers
 
         public IActionResult AddContributions()
         {
-            var vm = new ContributionsVm();
+            var vm = new AddContributionsVm();
             return View(vm);
         }
 
@@ -68,7 +68,7 @@ namespace QFun.Controllers
         }
 
 
-        
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -110,16 +110,28 @@ namespace QFun.Controllers
 
             if (ModelState.IsValid)
             {
+
                 var contriToEdit = contributionServices.GetContributionById(vm.Id);
-
-                contriToEdit.Description = vm.Description;
-                
-                contributionServices.EditContribution(contriToEdit);
-
                 string url = "https://localhost:44384/Challenges/Contributions";
                 url += "/" + contriToEdit.ChallengeId;
+                ClaimsPrincipal currentUser = this.User;
+                var currentUserId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-                return Redirect(url);
+                var UserName = contributionServices.GetUserNameById(currentUserId);
+                vm.UserName = UserName;
+                if (User.Identity.Name == vm.UserName)
+                {
+
+                    contriToEdit.Description = vm.Description;
+
+                    contributionServices.EditContribution(contriToEdit);
+
+                    return Redirect(url);
+                }
+                else
+                {
+                    return Redirect(url);
+                }
 
             }
 
@@ -133,58 +145,66 @@ namespace QFun.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddContributions(ContributionsVm vm, int id)
+        public async Task<IActionResult> AddContributions(AddContributionsVm vm, int id)
         {
+
+            string url = "https://localhost:44384/Challenges/Contributions";
+            url += "/" + id;
             if (ModelState.IsValid)
             {
                 string uniqueFileName = null;
                 vm.ChallengeId = id;
-
-                if (vm.Image != null)
+                ClaimsPrincipal currentUser = this.User;
+                var currentUserId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+                if (currentUserId != null)
                 {
 
-                    if (contributionServices.IsImage(vm.Image) && vm.Image.Length < (5 * 1024 * 1024))
+                    if (vm.Image != null)
                     {
-                        string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
-                        uniqueFileName = Guid.NewGuid().ToString() + "_" + vm.Image.FileName;
-                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        if (contributionServices.IsImage(vm.Image) && vm.Image.Length < (5 * 1024 * 1024))
                         {
-                            vm.Image.CopyTo(fileStream);
+                            string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+                            uniqueFileName = Guid.NewGuid().ToString() + "_" + vm.Image.FileName;
+                            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                            using (var fileStream = new FileStream(filePath, FileMode.Create))
+                            {
+                                vm.Image.CopyTo(fileStream);
+                            }
+
+                            //vm.Image.CopyTo(new FileStream(filePath, FileMode.Create));
+
+                            var contribution = new Contribution();
+
+                            contribution.Path = uniqueFileName;
+                            contribution.Description = vm.Description;
+                            contribution.ChallengeId = id;
+
+                            contribution.UserId = currentUserId;
+                            var UserName = contributionServices.GetUserNameById(currentUserId);
+                            UserName = vm.UserName;
+                            contributionServices.AddContribution(contribution);
                         }
 
-                        //vm.Image.CopyTo(new FileStream(filePath, FileMode.Create));
-
-                        var contribution = new Contribution();
-
-                        contribution.Path = uniqueFileName;
-                        contribution.Description = vm.Description;
-                        contribution.ChallengeId = id;
-
-                        ClaimsPrincipal currentUser = this.User;
-                        var currentUserId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-                        contribution.UserId = currentUserId;
-                        var UserName = contributionServices.GetUserNameById(currentUserId);
-                        UserName = vm.UserName;
-                        contributionServices.AddContribution(contribution);
                     }
-
+                }
+                else
+                {
+                    vm.ChallengeId = id;
+                    return Redirect(url);
                 }
 
 
-                string url = "https://localhost:44384/Challenges/Contributions";
-                url += "/" + id;
-
                 return Redirect(url);
             }
+
 
             else if (vm.Image == null || vm.Image.Length > (5 * 1024 * 1024) || !contributionServices.IsImage(vm.Image))
             {
                 vm.ChallengeId = id;
                 vm.ShowImageError = false;
-                return View(vm);
+                return Redirect(url);
             }
 
 
@@ -200,6 +220,7 @@ namespace QFun.Controllers
 
                 ClaimsPrincipal currentUser = this.User;
                 var currentUserId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+
 
                 var vote = new Vote();
                 vote.UserId = currentUserId;

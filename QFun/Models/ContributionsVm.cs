@@ -27,6 +27,5 @@ namespace QFun.Models
         [Required(ErrorMessage = "Du måste ladda upp en bild för att ladda upp ett bidrag")]
         public IFormFile Image { get; set; }
         public bool ShowImageError { get; internal set; } = true;
-        public bool ShowDescriptionError { get; internal set; } = true;
     }
 }
