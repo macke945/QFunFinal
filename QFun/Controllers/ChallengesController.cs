@@ -116,10 +116,9 @@ namespace QFun.Controllers
                 
                 contributionServices.EditContribution(contriToEdit);
 
-                string url = "https://localhost:44384/Challenges/Contributions";
-                url += "/" + contriToEdit.ChallengeId;
+                int id = contriToEdit.ChallengeId;
 
-                return Redirect(url);
+                return RedirectToAction(nameof(Contributions), new { id });
 
             }
 
@@ -173,11 +172,8 @@ namespace QFun.Controllers
 
                 }
 
+                return RedirectToAction(nameof(Contributions), new { id });
 
-                string url = "https://localhost:44384/Challenges/Contributions";
-                url += "/" + id;
-
-                return Redirect(url);
             }
 
             else if (vm.Image == null || vm.Image.Length > (5 * 1024 * 1024) || !contributionServices.IsImage(vm.Image))
@@ -215,17 +211,11 @@ namespace QFun.Controllers
                 }
             }
 
-            Debug.WriteLine(id2);
-            //return Redirect(Request.UrlReferrer.PathAndQuery);
-            string url = "https://localhost:44384/Challenges/Contributions";
-            url += "/" + id2;
 
-            return Redirect(url);
+            int id = id2;
 
-
-            //return RedirectToAction(@"Contributions/" + id2);
-
-            //return RedirectToAction(nameof(Contributions));
+            return RedirectToAction(nameof(Contributions), new { id });
+           
         }
 
 
@@ -252,10 +242,9 @@ namespace QFun.Controllers
                 contributionServices.RemoveContributionById(id1);
             }
 
-            string url = "https://localhost:44384/Challenges/Contributions";
-            url += "/" + id2;
+            int id = id2;
 
-            return Redirect(url);
+            return RedirectToAction(nameof(Contributions), new { id });
 
         }
 
@@ -280,10 +269,9 @@ namespace QFun.Controllers
                 contributionServices.RemoveContributionById(id1);
             }
 
-            string url = "https://localhost:44384/Challenges/Contributions";
-            url += "/" + id2;
+            int id = id2;
 
-            return Redirect(url);
+            return RedirectToAction(nameof(Contributions), new { id });
 
         }
         public async Task<IActionResult> DeleteChallengeAdmin(int id)
@@ -294,10 +282,8 @@ namespace QFun.Controllers
                 challengeService.RemoveChallengeById(id);
             }
 
-
-            string url = "https://localhost:44384/Challenges/Index";
-
-            return Redirect(url);
+            return RedirectToAction(nameof(Index));
+          
         }
     }
 }
