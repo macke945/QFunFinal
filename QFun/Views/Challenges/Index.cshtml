@@ -44,12 +44,12 @@
             <th>
                 Beskrivning
             </th>
-            <th>
-                Lägg till bidrag
-            </th>
-            <th>
+            @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin")) { 
+              <th>
                 Ta bort
-            </th>
+              </th>
+            }
+                
 
         </tr>
     </thead>
@@ -65,17 +65,12 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
-                <td>
-                    <a asp-action="Contributions" asp-route-id="@item.Id">
-                        Lägg till bidrag
-                    </a>
-                </td>
-                <td>
                     @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                     {
+                <td>
                         <a asp-action="DeleteChallengeAdmin" asp-route-id="@item.Id">Ta bort</a>
-                    }
                 </td>
+                    }
             </tr>
         }
 
