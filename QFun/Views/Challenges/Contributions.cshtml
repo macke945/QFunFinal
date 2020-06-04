@@ -86,7 +86,7 @@
                 }
                 @if (SignInManager.IsSignedIn(User) && User.Identity.Name == item.User.UserName && !User.IsInRole("Admin"))
                 {
-                <a asp-action=" DeleteContributionUser" asp-route-id1="@item.Id" asp-route-id2="@Model.ChallengeId">Ta bort</a>
+                    <a asp-action="DeleteContributionUser" asp-route-id1="@item.Id" asp-route-id2="@Model.ChallengeId">Ta bort</a>
                 }
             </td>
 
