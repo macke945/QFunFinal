@@ -1,0 +1,61 @@
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<QFun.Data.DbTables.ApplicationUser> UserManager
+@inject SignInManager<QFun.Data.DbTables.ApplicationUser> SignInManager
+@model QFun.Models.MyPageUserVm
+@{
+    ViewData["Title"] = "_User";
+}
+
+<h2>@((await UserManager.GetUserAsync(User)).UserName)</h2>
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a asp-area="Views" asp-controller="MyPage" asp-action="_AboutMe">Om mig</a></li>
+    <li class="breadcrumb-item mt-lg-auto"><a asp-area="Views" asp-controller="MyPage" asp-action="_Chart">Utmanings statistik </a></li>
+</ol>
+
+
+@if (Model == null)
+{
+    <span>no items found</span>
+}
+else
+{
+    <table class="table table-striped table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    Bild
+                </th>
+                <th>
+                    Beskrivning
+                </th>
+                <th>
+                    Röster
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Contributions)
+            {
+
+                <tr>
+                    <td>
+                        <img src="~/images/@Url.Content(item.Path)" alt="Image not loaded" width="200" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Votes.Count)
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+
+
+
+
+

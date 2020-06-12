@@ -1,0 +1,14 @@
+﻿@model contributionEditVm
+<h1 class="text-danger" hidden=@Model.ShowEditCheatError></h1>
+<h1>Redigera detta bidrag</h1>
+<form asp-action="EditContributions">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label">Beskrivning</label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Redigera" class="btn btn-primary" />
+    </div>
+</form>

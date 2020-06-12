@@ -18,6 +18,7 @@ using WebPWrecover.Services;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.DataProtection;
+using QFun.Data.DbTables;
 
 namespace QFun
 {
@@ -33,10 +34,15 @@ namespace QFun
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ContributionServices>();
+            services.AddScoped<ChallengeServices>();
+            services.AddScoped<VoteServices>();
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
 
@@ -58,7 +64,7 @@ namespace QFun
                    options.ClientSecret = googleAuthNSection["ClientSecret"];
                    options.CallbackPath = "/signin-google";
                });
-               
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
@@ -119,6 +125,9 @@ namespace QFun
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                     name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id1?}/{id2?}");
                 endpoints.MapRazorPages();
             });
         }

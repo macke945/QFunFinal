@@ -6,6 +6,9 @@
     <title>@ViewData["Title"] - QFun</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <script src="~/js/Chart.min.js"></script>
+    <script src="~/js/utils.js"></script>
+
 </head>
 <body>
     <header>
@@ -20,16 +23,16 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a id="nav-menu" class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a id="nav-menu" class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Hem</a>
                         </li>
                         <li class="nav-item">
-                            <a id="nav-menu" class="nav-link text-white" asp-area="" asp-controller="Challenges" asp-action="Index">Challenges</a>
+                            <a id="nav-menu" class="nav-link text-white" asp-area="" asp-controller="Challenges" asp-action="Index">Utmaningar</a>
                         </li>
                         <li class="nav-item">
-                            <a id="nav-menu" class="nav-link text-white" asp-area="" asp-controller="Leaderboard" asp-action="Index">Leaderboard</a>
+                            <a id="nav-menu" class="nav-link text-white" asp-area="" asp-controller="Leaderboard" asp-action="Index">Poängtabell</a>
                         </li>
                         <li class="nav-item">
-                            <a id="nav-menu" class="nav-link text-white" asp-area="" asp-controller="MyPage" asp-action="Index">MyPage</a>
+                            <a id="nav-menu" class="nav-link text-white" asp-area="" asp-controller="MyPage" asp-action="Index">Min sida</a>
                         </li>
                     </ul>
                 </div>
@@ -41,12 +44,6 @@
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - QFun - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
